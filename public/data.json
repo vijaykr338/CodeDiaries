@@ -1,0 +1,49 @@
+{
+    "books": [
+      {
+        "title": "Server Side Stories",
+        "author": "John Doe",
+        "published": 2023,
+        "chapters": [
+          {
+            "title": "Introduction to Server-Side",
+            "pages": 10
+          },
+          {
+            "title": "Advanced Server Techniques",
+            "pages": 20
+          }
+        ]
+      },
+      {
+        "title": "Client Side Adventures",
+        "author": "Jane Smith",
+        "published": 2022,
+        "chapters": [
+          {
+            "title": "Getting Started with Client-Side",
+            "pages": 15
+          },
+          {
+            "title": "Client-Side Best Practices",
+            "pages": 25
+          }
+        ]
+      },
+      {
+        "title": "Full Stack Development",
+        "author": "Alex Johnson",
+        "published": 2021,
+        "chapters": [
+          {
+            "title": "Introduction to Full Stack",
+            "pages": 12
+          },
+          {
+            "title": "Building Full Stack Applications",
+            "pages": 30
+          }
+        ]
+      }
+    ]
+  }
