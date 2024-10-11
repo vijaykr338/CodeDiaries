@@ -1,10 +1,13 @@
 import { useState } from 'react'
+import SignUpSignIn from './Components/SignUpSignIn'
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
-   <div className='w-full h-screen bg-black text-white'> HELLO</div>
+   <div>
+    <SignUpSignIn />
+   </div>
   )
 }
 
