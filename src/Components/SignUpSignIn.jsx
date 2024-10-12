@@ -4,27 +4,55 @@ import { FaArrowLeft } from "react-icons/fa";
 function SignUpSignIn() {
   return (
     <div className="grid grid-cols-2 p-8 bg-gray-100 min-h-screen">
-      <div className="bg-white p-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
-      <div className="relative flex items-center justify-between p-4">
+      <div className="bg-white px-12 py-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
+        <div className="relative flex justify-left p-4">
           <button className="flex items-center text-gray-700 hover:text-gray-900">
             <FaArrowLeft className="mr-2" />         
           </button>
-          <div>
-            <span className="text-gray-600">Already member?</span>
+          <div className='w-1/2 items-right text-right pt-0.5 ml-72'>
+            <span className="text-gray-600 ">Already a member?</span>
             <a href="#" className="text-blue-600 hover:underline ml-2">
               Sign In
             </a>
           </div>
         </div>
-        <h2 className="text-2xl font-bold text-blue-600 mb-4">Column 1</h2>
-        <p className="text-gray-700">
-          This is the content for the first column. You can add more detailed information here to make it look interesting.
-        </p>
-        <button className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors duration-300">
-          Learn More
-        </button>
+        <div className='ml-4 mt-5'>
+          <div className='w-full flex flex-col'>
+            <h3 className='text-2x1 font-semibold mb-4 text-4xl'>Sing Up</h3>
+            <p className='text-gray-600 text-sm'>Welcome to Code Diaries</p>
+          </div>
+
+          <div className='w-full flex flex-col'>
+            <input 
+              type="text"
+              placeholder='Username' 
+              className='w-full mt-7 text-black border-b border-black outline-none focus:outline-none py-4'/>
+          </div>
+          <div className='w-full flex flex-col'>
+            <input 
+              type="email"
+              placeholder='Email' 
+              className='w-full text-black border-b border-black outline-none focus:outline-none py-4'/>
+          </div>
+          <div className='grid grid-cols-2 gap-x-4'>
+            <div className='w-full flex flex-col'>
+              <input 
+                type="password"
+                placeholder='Password' 
+                className='w-full text-black border-b border-black outline-none focus:outline-none py-4'/>
+            </div>
+            <div className='w-full flex flex-col'>
+              <input 
+                type="password"
+                placeholder='Retype Password' 
+                className='w-full text-black border-b border-black outline-none focus:outline-none py-4'/>
+            </div>
+          </div>
+        </div>
+
+        
       </div>
-        <div className="bg-white pt-8 pb-8 pr-40 shadow-lg hover:shadow-xl transition-shadow duration-300">
+      <div className="bg-white pt-8 pb-8 pr-40 bg-zinc-300">
       </div>
     </div>
   )
