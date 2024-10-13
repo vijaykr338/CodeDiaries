@@ -1,4 +1,5 @@
-import { useState } from "react";
+import JoditEditor from "jodit-react";
+import React, { useMemo, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 
 function App() {
@@ -6,40 +7,15 @@ function App() {
    const OnSubmit = (data) => {
       console.log(data);
    };
-
+   
    return (
       <>
-         <div>
-            <h1 className="font-bold text-8xl flex mx-24">Create Post</h1>
-            <div>
-               <form
-                  className="
-       justify-start 
-       text-4xl 
-       flex 
-       font-bold 
-       text-black 
-       bg-red-700 
-       border-4 
-       flex-col 
-       gap-4 
-       border-black selection:border-none"
-                  onSubmit={handleSubmit(OnSubmit)}
-               >
-                  <input
-                     className=""
-                     type="text"
-                     placeholder="Title of the page"
-                     {...register("Title of the Post")}
-                  />
-                  <input type="text" placeholder="Tags" {...register("Tags")} />
-                  <input
-                     type="text"
-                     placeholder="Content"
-                     {...register("Content")}
-                  />
-                  <input type="submit" />
-               </form>
+         <div className="flex justify-center flex-shrink-0 bg-slate-300 h-full w-full">
+            <div className="flex w-4/5 bg-white my-10 px-10 h-full py-6">
+               <div className="flex font-bold text-5xl">Create Post!</div>
+
+               <div className="flex flex-col flex-shrink-0 w-3/5 justify-start">
+               <form onSubmit={handleSubmit(OnSubmit)}></form></div>
             </div>
          </div>
       </>
