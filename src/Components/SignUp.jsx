@@ -52,10 +52,10 @@ function SignUp() {
             </div>
           </div>
           <div className='w-full flex flex-row items-center mt-24'>
-            <button className='bg-black min-w-[110px] p-2 justify-center rounded-full text-center flex text-white'>Register</button>
-            <p className='mx-[140px] py-1 text-center justify-center'>or</p>
-            <img src={GOOGLE_ICON} className='rounded-full hover:bg-zinc-300 h-6 w-6 border-2 rounded-4x1 border-zinc-500'/>
-            <img src={FACEBOOK_ICON} className='rounded-full mx-24 hover:bg-zinc-300 h-6 w-6 border-2 border-zinc-500'/>
+            <button className='bg-black min-w-[105px] p-2 justify-center rounded-full text-center flex text-white'>Register</button>
+            <p className='mx-[180px] py-1 text-center justify-center'>or</p>
+            <img src={GOOGLE_ICON} className='rounded-full hover:bg-zinc-300 h-7 w-7 border-2 rounded-4x1 border-zinc-500'/>
+            <img src={FACEBOOK_ICON} className='ml-3 rounded-full mx-24 hover:bg-zinc-300 h-7 w-7 border-2 border-zinc-500'/>
 
             
           </div>
