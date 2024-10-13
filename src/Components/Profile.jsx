@@ -21,15 +21,15 @@ function Profile() {
         setOverview(false);
         setPosts(true);
     }
-
+//w-full=71.7rem
   return (
     <div>
       <div className='w-[90vw] ml-[5vw] rounded-lg mt-5 shadow-xl h-auto relative border-2 border-slate-200 border-solid'>
-        <div className='w-full h-80'>
-          <img className='w-full h-80 rounded-tl-lg rounded-tr-lg' src='../../Images/bg.jpeg' />
+        <div className='w-full h-96'>
+          <img className='w-full h-96 rounded-tl-lg rounded-tr-lg' src='../../Images/bg.jpeg' />
         </div>
         <div className='ml-5 sm:ml-20 -mt-20 rounded-full rounded-t-full h-40 sm:h-56 w-40 sm:w-56 absolute flex justify-center items-center bg-white z-50'>
-          <img className='rounded-full h-36 sm:h-52 w-36 sm:w-52' src='../../Images/Profile image.jpeg' />
+          <img className='rounded-full h-36 w-36 sm:h-52  sm:w-52' src='../../Images/Profile image.jpeg' />
         </div>
         <div className='w-[60%] sm:w-[72%] h-52 ml-44 sm:ml-80'>
           <div className='flex justify-between w-auto items-center mt-3 flex-wrap'>
@@ -79,13 +79,13 @@ function Profile() {
         </div>
       </div>
       <div className='w-[90%] ml-[5%] rounded-md h-10 justify-center flex mt-5 bg-slate-300'>
-        <div className={`w-[50%] sm:w-[40%] cursor-pointer`} onClick={handleOverviewClick}>
+        <div className={`w-[40%] sm:w-[20%] cursor-pointer`} onClick={handleOverviewClick}>
             <div className={`${overview?'bg-white':'text-slate-500'} font-mono h-8 font-bold w-28 text-center ml-3 p-1 rounded-lg mt-1`}>
                 Overview
             </div>
         </div>
-        <div className={`w-[50%] cursor-pointer sm:w-[70%]`} onClick={handlePostsClick}>
-            <div className={`${posts?'bg-white':'text-slate-500'} w-28 font-bold h-8 p-1 font-mono  text-center ml-3 rounded-lg mt-1`}>
+        <div className={`w-[60%] cursor-pointer sm:w-[80%]`} onClick={handlePostsClick}>
+            <div className={`${posts?'bg-white':'text-slate-500'} w-28 font-bold h-8 p-1 font-mono  text-center rounded-lg mt-1`}>
                 Posts
             </div>
         </div>
