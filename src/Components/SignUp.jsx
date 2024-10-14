@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { FaArrowLeft } from "react-icons/fa"; 
 import GOOGLE_ICON from "../assets/google.svg";
 import FACEBOOK_ICON from "../assets/facebook.svg";
@@ -8,13 +8,43 @@ import backgroundImage from '../assets/bgimg.png';
 
 function SignUp() {
   const navigate = useNavigate()
-
   const goBack = () => {
     navigate(-1)
   }
 
+  const [username, setUsername] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [retypePassword, setReTypePassword] = useState('')
+  const handleChangeUsername = (event) => {
+    setUsername(event.target.value);
+  }
+  const handleChangeEmail = (event) => {
+    setEmail(event.target.value);
+  }
+  const handleChangePassword = (event) => {
+    setPassword(event.target.value);
+  }
+  const handleChangeReTypePassword = (event) => {
+    setReTypePassword(event.target.value);
+  }
+  const handlePrint = () => {
+    if (!username || !email || !password || !retypePassword) {
+      console.log('Please fill out all fields.');
+      return;
+    }
+
+    if (password !== retypePassword) {
+        console.log('Passwords do not match.');
+        return;
+    }
+    console.log('Username:', username);
+    console.log('Email:', email);
+    console.log('Password:', password);
+  }
+
   return (
-    <div className="grid grid-cols-2 p-8 bg-gray-100 min-h-screen bg-cover bg-center bg-no-repeat"
+    <div className="grid md:grid-cols-2 grid-cols-1 p-8 bg-gray-100 min-h-screen bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url(${backgroundImage})`}}>
       <div className="bg-white px-12 py-6 shadow-lg hover:shadow-xl transition-shadow duration-300 rounded-tl-lg rounded-bl-lg">
         <div className="relative flex justify-left p-4">
@@ -37,31 +67,42 @@ function SignUp() {
           <div className='w-full flex flex-col'>
             <input 
               type="text"
-              placeholder='Username' 
+              placeholder='Username'
+              value={username} 
+              onChange={handleChangeUsername}  
               className='w-full mt-7 text-black border-b border-black outline-none focus:outline-none py-4'/>
           </div>
           <div className='w-full flex flex-col'>
             <input 
               type="email"
               placeholder='Email' 
+              value={email} 
+              onChange={handleChangeEmail}  
               className='w-full text-black border-b border-black outline-none focus:outline-none py-4'/>
           </div>
           <div className='grid grid-cols-2 gap-x-4'>
             <div className='w-full flex flex-col'>
               <input 
                 type="password"
-                placeholder='Password' 
+                placeholder='Password'
+                value={password} 
+                onChange={handleChangePassword}  
                 className='w-full text-black border-b border-black outline-none focus:outline-none py-4'/>
             </div>
             <div className='w-full flex flex-col'>
               <input 
                 type="password"
                 placeholder='Retype Password' 
+                value={retypePassword} 
+                onChange={handleChangeReTypePassword} 
                 className='w-full text-black border-b border-black outline-none focus:outline-none py-4'/>
             </div>
           </div>
           <div className='w-full flex flex-row items-center mt-24'>
-            <button className='bg-black min-w-[105px] p-2 justify-center rounded-full text-center font-semibold flex text-white transition-transform duration-300 hover:scale-110'>Register</button>
+            <button className='bg-black min-w-[105px] p-2 justify-center rounded-full text-center font-semibold flex text-white transition-transform duration-300 hover:scale-110'
+                      onClick={handlePrint}>
+              Register
+            </button>
             <p className='mx-[180px] py-1 text-center justify-center'>or</p>
             <img src={GOOGLE_ICON} className='rounded-full hover:bg-zinc-300 h-7 w-7 border-2 rounded-4x1 border-zinc-500'/>
             <img src={FACEBOOK_ICON} className='ml-3 rounded-full mx-24 hover:bg-zinc-300 h-7 w-7 border-2 border-zinc-500'/>
