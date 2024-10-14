@@ -14,6 +14,8 @@ function SignIn() {
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [paragraphText, setParagraphText] = useState('');
+  const [textColor, setTextColor] = useState('text-red-500')
 
   const handleChangeUsername = (event) => {
     setUsername(event.target.value);
@@ -24,17 +26,41 @@ function SignIn() {
 
   const handlePrint = () => {
     if (!username || !password) {
-      console.log('Please fill out all fields.');
+      handleErrorTextChange(0)
       return;
     }
+    // Will use later
+
+    // else if(password and username do not match){
+    //   handleErrorTextChange(1)
+    // }
+
 
     console.log('Username:', username);
     console.log('Password:', password);
+    handleTextColorChange(2)
+    setParagraphText('Login Successful')
+  }
+  const handleErrorTextChange = (a) => {
+    handleTextColorChange(a)
+    if(a===0) {
+      setParagraphText('Please fill all the details')
+    }else if(a===1){
+      setParagraphText('Incorrect Username or Password')
+    }
+  }
+
+  const handleTextColorChange = (a) => {
+    if(a===0 || a===1) {
+      setTextColor('text-red-500')
+    }else if(a===2) {
+      setTextColor('text-green-500')
+    }
   }
 
   return (
     <div className="grid grid-cols-2 p-8 bg-gray-100 min-h-screen bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url(${backgroundImage})`}}>
+          style={{ backgroundImage: `url(${backgroundImage})` }}>
       <div className="max-h-fit overflow-hidden flex justify-center items-center rounded-tl-lg rounded-bl-lg">
         <img src={COVER} className='w-full h-full object-cover' />
       </div>
@@ -72,7 +98,10 @@ function SignIn() {
               onChange={handleChangePassword}
               className='w-full text-black border-b border-black outline-none focus:outline-none py-4'/>
           </div>
-          <div className='w-full flex flex-row items-center mt-32'>
+          <div className={`${textColor} mt-4 min-h-6 font-semibold`}>
+            <p>{paragraphText}</p>
+          </div>
+          <div className='w-full flex flex-row items-center mt-20'>
             <button className='bg-black min-w-[105px] p-2 justify-center rounded-full text-center font-semibold flex text-white transition-transform duration-300 hover:scale-110'
                       onClick={handlePrint}>
               Login
@@ -80,8 +109,6 @@ function SignIn() {
             <p className='mx-[180px] text-gray-600 py-1 text-center justify-center'>or</p>
             <button><img src={GOOGLE_ICON} className='mr-7 rounded-full hover:bg-zinc-300 h-7 w-7 border-2 rounded-4x1 border-zinc-500'/></button>
             <button><img src={FACEBOOK_ICON} className='ml-2 rounded-full mx-24 hover:bg-zinc-300 h-7 w-7 border-2 border-zinc-500'/></button>
-
-            
           </div>
         </div>
       </div>

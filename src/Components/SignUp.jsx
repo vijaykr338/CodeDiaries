@@ -16,6 +16,9 @@ function SignUp() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [retypePassword, setReTypePassword] = useState('')
+  const [paragraphText, setParagraphText] = useState('');
+  const [textColor, setTextColor] = useState('text-red-500')
+
   const handleChangeUsername = (event) => {
     setUsername(event.target.value);
   }
@@ -28,19 +31,39 @@ function SignUp() {
   const handleChangeReTypePassword = (event) => {
     setReTypePassword(event.target.value);
   }
+
   const handlePrint = () => {
     if (!username || !email || !password || !retypePassword) {
-      console.log('Please fill out all fields.');
+      handleErrorTextChange(0)
       return;
     }
 
     if (password !== retypePassword) {
-        console.log('Passwords do not match.');
+        handleErrorTextChange(1)
         return;
     }
     console.log('Username:', username);
     console.log('Email:', email);
     console.log('Password:', password);
+    handleTextColorChange(2)
+    setParagraphText('Successful')
+  }
+
+  const handleErrorTextChange = (a) => {
+    handleTextColorChange(a)
+    if(a===0) {
+      setParagraphText('Please fill all the details')
+    }else if(a===1) {
+      setParagraphText('Passwords do not match')
+    }
+  }
+
+  const handleTextColorChange = (a) => {
+    if(a===0 || a===1) {
+      setTextColor('text-red-500')
+    }else if(a===2) {
+      setTextColor('text-green-500')
+    }
   }
 
   return (
@@ -98,7 +121,10 @@ function SignUp() {
                 className='w-full text-black border-b border-black outline-none focus:outline-none py-4'/>
             </div>
           </div>
-          <div className='w-full flex flex-row items-center mt-24'>
+          <div className={`${textColor} mt-4 min-h-6 font-semibold`}>
+            <p>{paragraphText}</p>
+          </div>
+          <div className='w-full flex flex-row items-center mt-14'>
             <button className='bg-black min-w-[105px] p-2 justify-center rounded-full text-center font-semibold flex text-white transition-transform duration-300 hover:scale-110'
                       onClick={handlePrint}>
               Register
