@@ -15,7 +15,7 @@ function SignUp() {
           </button>
           <div className='w-1/2 items-right text-right pt-0.5 ml-72'>
             <span className="text-gray-600 ">Already a member?</span>
-            <a href="#" className="text-blue-600 hover:underline ml-2">
+            <a href="/signin" className="text-blue-600 hover:underline ml-2">
               Sign In
             </a>
           </div>
