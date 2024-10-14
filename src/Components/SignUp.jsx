@@ -1,16 +1,22 @@
 import React from 'react'
 import { FaArrowLeft } from "react-icons/fa"; 
-import { FaArrowRight } from "react-icons/fa"; 
 import GOOGLE_ICON from "../assets/google.svg";
 import FACEBOOK_ICON from "../assets/facebook.svg";
 import COVER from "../assets/codediariescover.png";
+import { useNavigate } from 'react-router-dom';
 
 function SignUp() {
+  const navigate = useNavigate()
+
+  const goBack = () => {
+    navigate(-1)
+  }
+
   return (
     <div className="grid grid-cols-2 p-8 bg-gray-100 min-h-screen">
       <div className="bg-white px-12 py-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
         <div className="relative flex justify-left p-4">
-          <button>
+          <button onClick={goBack}>
             <FaArrowLeft className="mr-2" />         
           </button>
           <div className='w-1/2 items-right text-right pt-0.5 ml-72'>
