@@ -1,4 +1,4 @@
-import React from 'react' 
+import React, { useState } from 'react' 
 import { FaArrowLeft } from "react-icons/fa"; 
 import GOOGLE_ICON from "../assets/google.svg";
 import FACEBOOK_ICON from "../assets/facebook.svg";
@@ -8,9 +8,28 @@ import backgroundImage from '../assets/bgimg.png';
 
 function SignIn() {
   const navigate = useNavigate()
-
   const goBack = () => {
     navigate(-1)
+  }
+
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+
+  const handleChangeUsername = (event) => {
+    setUsername(event.target.value);
+  }
+  const handleChangePassword = (event) => {
+    setPassword(event.target.value);
+  }
+
+  const handlePrint = () => {
+    if (!username || !password) {
+      console.log('Please fill out all fields.');
+      return;
+    }
+
+    console.log('Username:', username);
+    console.log('Password:', password);
   }
 
   return (
@@ -41,16 +60,23 @@ function SignIn() {
             <input 
               type="text"
               placeholder='Username' 
+              value={username} 
+              onChange={handleChangeUsername}
               className='w-full mt-7 text-black border-b border-black outline-none focus:outline-none py-4'/>
           </div>
           <div className='w-full flex flex-col'>
             <input 
               type="password"
               placeholder='Password' 
+              value={password} 
+              onChange={handleChangePassword}
               className='w-full text-black border-b border-black outline-none focus:outline-none py-4'/>
           </div>
           <div className='w-full flex flex-row items-center mt-32'>
-            <button className='bg-black min-w-[105px] p-2 justify-center rounded-full text-center font-semibold flex text-white transition-transform duration-300 hover:scale-110'>Login</button>
+            <button className='bg-black min-w-[105px] p-2 justify-center rounded-full text-center font-semibold flex text-white transition-transform duration-300 hover:scale-110'
+                      onClick={handlePrint}>
+              Login
+            </button>
             <p className='mx-[180px] text-gray-600 py-1 text-center justify-center'>or</p>
             <button><img src={GOOGLE_ICON} className='mr-7 rounded-full hover:bg-zinc-300 h-7 w-7 border-2 rounded-4x1 border-zinc-500'/></button>
             <button><img src={FACEBOOK_ICON} className='ml-2 rounded-full mx-24 hover:bg-zinc-300 h-7 w-7 border-2 border-zinc-500'/></button>
