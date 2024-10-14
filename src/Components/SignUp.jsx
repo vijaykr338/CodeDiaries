@@ -3,6 +3,7 @@ import { FaArrowLeft } from "react-icons/fa";
 import { FaArrowRight } from "react-icons/fa"; 
 import GOOGLE_ICON from "../assets/google.svg";
 import FACEBOOK_ICON from "../assets/facebook.svg";
+import COVER from "../assets/codediariescover.png";
 
 function SignUp() {
   return (
@@ -63,7 +64,8 @@ function SignUp() {
 
         
       </div>
-      <div className="bg-white pt-8 pb-8 pr-40 bg-zinc-300">
+      <div className="max-h-fit overflow-hidden flex justify-center items-center">
+        <img src={COVER} className='w-full h-full object-cover' />
       </div>
     </div>
   )
