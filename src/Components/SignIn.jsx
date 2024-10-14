@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react' 
 import { FaArrowLeft } from "react-icons/fa"; 
 import GOOGLE_ICON from "../assets/google.svg";
 import FACEBOOK_ICON from "../assets/facebook.svg";
@@ -16,7 +16,7 @@ function SignIn() {
             <FaArrowLeft className="mr-2" />
           </button>
           <div className='w-1/2 items-right text-right pt-0.5 ml-72'>
-            <span className="text-gray-600 ">New Member?</span>
+            <span className="text-gray-600 ">New to Code Diaries?</span>
             <a href="#" className="text-blue-600 hover:underline ml-2">
               Sign Up
             </a>
