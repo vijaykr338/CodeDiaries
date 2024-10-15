@@ -35,7 +35,7 @@ function Edit() {
                     <input type="submit" className="border-2 border-black bg-black font-bold text-white py-2 px-2 w-28 rounded-full hover:shadow-xl shadow-cyan-300"/>
 
                     <input
-                    className="rounded-large w-0 h-0"
+                    className="rounded-large"
                     type="textarea" value={Content} {...register("content(html)")} />
                   </form>
                   <div>
