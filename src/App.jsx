@@ -1,10 +1,11 @@
-import { useState } from 'react'
+import HomePage from "./components/HomePage"
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
-   <div></div>
+   <div className="overflow-x-hidden" >
+    <HomePage/>
+   </div>
   )
 }
 
