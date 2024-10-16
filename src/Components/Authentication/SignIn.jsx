@@ -1,10 +1,10 @@
 import React, { useState } from 'react' 
 import { FaArrowLeft } from "react-icons/fa"; 
-import GOOGLE_ICON from "../assets/google.svg";
-import FACEBOOK_ICON from "../assets/facebook.svg";
-import COVER from "../assets/codediariescover.png";
+import GOOGLE_ICON from "../../assets/google.svg"
+import FACEBOOK_ICON from "../../assets/facebook.svg";
+import COVER from "../../assets/codediariescover.png";
 import { useNavigate } from 'react-router-dom';
-import backgroundImage from '../assets/bgimg.png';
+import backgroundImage from '../../assets/bgimg.png';
 
 function SignIn() {
   const navigate = useNavigate()
