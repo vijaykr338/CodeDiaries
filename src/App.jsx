@@ -1,16 +1,19 @@
-import JoditEditor from "jodit-react";
-import React, { useMemo, useRef, useState } from "react";
-import { useForm } from "react-hook-form";
-import Edit from "./Components/Editor/Edit";
+
+import { useState } from 'react'
+import SignUp from './Components/Authentication/SignUp'
+import SignIn from './Components/Authentication/SignIn'
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 
 function App() {
-   
-   
-   return (
-      <>
-         <Edit/>      
-      </>
-   );
-}
+  return (
+  <Router>
+    <Routes>
+    <Route path="/" element={<SignIn />} />
+    <Route path="/signup" element={<SignUp />} />
+    <Route path="/signin" element={<SignIn />} />
+    </Routes>
+  </Router>
 
-export default App;
+
+export default App
+
