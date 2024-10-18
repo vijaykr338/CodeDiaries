@@ -98,7 +98,7 @@ space.
       <img src={example} alt="sds" />
 
       <div className="mr-44 flex">
-        <div >
+        <div>
           <div className="sticky top-0 -mr-20 my-10 h-screen p-4">
             <ul className="space-y-4">
               <li>
