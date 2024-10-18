@@ -1,4 +1,5 @@
 
+
 import { useState } from 'react'
 import SignUp from './Components/Authentication/SignUp'
 import SignIn from './Components/Authentication/SignIn'
@@ -13,7 +14,6 @@ function App() {
     <Route path="/signin" element={<SignIn />} />
     </Routes>
   </Router>
-
 
 
 export default App
