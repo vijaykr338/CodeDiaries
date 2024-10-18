@@ -12,7 +12,8 @@ const Header = () => {
   return (
     <div className='w-screen flex justify-between items-center pt-5 h-32 pl-5 pr-5 md:pl-10 md:pr-10' >
         <div className='flex justify-between items-center gap-2 md:gap-3 lg:gap-5' >
-            <img src={brand} className='bg-white h-10 w-10 md:h-16 md:w-16 rounded-full mr-3' />
+            <Link to="/profile/example">
+            <img src={brand} className='bg-white h-10 w-10 md:h-16 md:w-16 rounded-full mr-3' /></Link>
             <Link to="/create-post">
             <div className='text-gray-500 text-md md:text-xl hover:text-white duration-500'>CREATE POST</div>
             </Link>
