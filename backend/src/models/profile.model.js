@@ -19,7 +19,7 @@ const profileSchema=new mongoose.Schema({
     },
     bg_pic:{
         type:String,
-        default:"../../public/bg_pic.jpeg"
+        default:"https://img.freepik.com/premium-vector/laptop-with-word-keyboard-screen_906149-48380.jpg?w=1380"
     },
     name:{
         type:String,
