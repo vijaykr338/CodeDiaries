@@ -38,7 +38,7 @@ const viewProfile = async (req, res) => {
     // if (profile.email === req.session.email) {
     //   profile.isItTheUser = true;
     // }
-
+    // await profile.save();
     res.status(200).send(profile);
   } catch (err) {
     console.error("Error fetching details:", err);

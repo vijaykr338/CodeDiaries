@@ -17,16 +17,21 @@ function Profile() {
     let [details,setDetails]=useState("");
     const [error,setError]=useState("");
     const [loading, setLoading] = useState(false)
-    let [updatedDetails,setUpdatedDetails]=useState({
-      name:'',
-      position:'',
-      location:'',
-      summary:'',
-      profile_pic:null,
-      bg_pic:null,
-      isItTheUser:false
-    })
+    // let [updatedDetails,setUpdatedDetails]=useState({
+    //   name:'',
+    //   position:'',
+    //   location:'',
+    //   summary:'',
+    //   profile_pic:null,
+    //   bg_pic:null,
+    //   isItTheUser:false
+    // })
     const email= "assaf@gmail.com"||location.state.key ;
+
+    // setDetails(prevdetails=>({
+    //   ...prevdetails,
+    //   isItTheUser:"true"
+    // }))
 
     useEffect(()=>{
       const fetchProfile=async()=>{
@@ -36,15 +41,15 @@ function Profile() {
           })
           console.log(response.data);
           setDetails(response.data);
-          setUpdatedDetails(prevdetails=>({
-            ...prevdetails,
-            name:response.data.name,
-            location:response.data.location,
-            position:response.data.position,
-            summary:response.data.summary,
-            profile_pic:response.data.profile_pic,
-            bg_pic:response.data.bg_pic
-          }));
+          // setUpdatedDetails(prevdetails=>({
+          //   ...prevdetails,
+          //   name:response.data.name,
+          //   location:response.data.location,
+          //   position:response.data.position,
+          //   summary:response.data.summary,
+          //   profile_pic:response.data.profile_pic,
+          //   bg_pic:response.data.bg_pic
+          // }));
         }
         catch(err){
           setError(err.response.data || "An error occurred while fetching profile");
@@ -104,10 +109,10 @@ function Profile() {
              'profile_pic' : updatedProfile.profile_pic
           }));
           
-          setUpdatedDetails(prevdetails => ({
-            ...prevdetails,
-            'profile_pic' : updatedProfile.profile_pic
-          }));
+          // setUpdatedDetails(prevdetails => ({
+          //   ...prevdetails,
+          //   'profile_pic' : updatedProfile.profile_pic
+          // }));
           setLoading(false)
         } catch (err) {
           console.error("Error uploading the image", err);
@@ -140,10 +145,10 @@ function Profile() {
              'bg_pic' : updatedProfile.bg_pic
           }));
           
-          setUpdatedDetails(prevdetails => ({
-            ...prevdetails,
-            'bg_pic' : updatedProfile.bg_pic
-          }));
+          // setUpdatedDetails(prevdetails => ({
+          //   ...prevdetails,
+          //   'bg_pic' : updatedProfile.bg_pic
+          // }));
           setLoading(false);
         } catch (err) {
           console.error("Error uploading the image", err);
@@ -152,21 +157,21 @@ function Profile() {
     };
 
     const handleNameChange=(e)=>{
-      setUpdatedDetails(prevdetails=>({
+      setDetails(prevdetails=>({
         ...prevdetails,
         name:e.target.value
       }))
     }
 
     const handlePositionChange=(e)=>{
-      setUpdatedDetails(prevdetails=>({
+      setDetails(prevdetails=>({
         ...prevdetails,
         position:e.target.value
       }))
     }
 
     const handleLocationChange=(e)=>{
-      setUpdatedDetails(prevdetails=>({
+      setDetails(prevdetails=>({
         ...prevdetails,
         location:e.target.value
       }))
@@ -179,7 +184,7 @@ function Profile() {
     const handleUpdateProfile=async()=>{
       try {
         // Send file to the backend
-        const response = await axios.post(`http://localhost:3000/profile/update`, updatedDetails, {
+        const response = await axios.post(`http://localhost:3000/profile/update`, details, {
           withCredentials: true
         });
         // console.log(response.data);
@@ -189,7 +194,7 @@ function Profile() {
         // console.log(response.data);
         setDetails(updatedProfile);
         
-        setUpdatedDetails(updatedProfile);
+        // setUpdatedDetails(updatedProfile);
         setLoading(false);
         setUpdate(false);
       } catch (err) {
@@ -205,7 +210,7 @@ function Profile() {
     const handleSummaryUpdate=async()=>{
       try {
         // Send file to the backend
-        const response = await axios.post(`http://localhost:3000/profile/update_summary`, updatedDetails, {
+        const response = await axios.post(`http://localhost:3000/profile/update_summary`, details, {
           withCredentials: true
         });
         // console.log(response.data);
@@ -215,7 +220,7 @@ function Profile() {
         // console.log(response.data);
         setDetails(updatedProfile);
         
-        setUpdatedDetails(updatedProfile);
+        // setUpdatedDetails(updatedProfile);
         setLoading(false);
         setUpdateSummary(false);
       } catch (err) {
@@ -224,7 +229,7 @@ function Profile() {
     }
 
     const handleSummaryDataChange=(e)=>{
-      setUpdatedDetails(prevdetails=>({
+      setDetails(prevdetails=>({
         ...prevdetails,
         summary:e.target.value
       }))
@@ -234,6 +239,7 @@ function Profile() {
   return (
 
     <div className={`${loading?'opacity-20':''} my-16`}>
+      {error && <div className='text-red-500 mt-2'>{error}</div>}
        <div className={`loader2 top-[50%] left-[50%] absolute  z-50 ${loading?'block':'hidden'}`}></div>
       <div className={` w-[90vw] ml-[5vw] rounded-lg mt-5 shadow-xl h-auto relative border-2 border-slate-200 border-solid`}>
         <div className="w-full h-96">
@@ -241,7 +247,7 @@ function Profile() {
             className="w-full h-96 rounded-tl-lg object-cover rounded-tr-lg"
             src={details.bg_pic}
           />
-          <div className={`${update?'inline':'inline'}`}>
+          <div className={`${update?'block':'hidden'}`}>
           <button onClick={loading ? null : triggerbgInput} className="absolute top-3 right-3 bg-white rounded-full p-2 shadow-md hover:bg-gray-100">
             <PencilIcon className={`w-6 h-6 ${loading ? 'text-gray-300' : 'text-green-500'}`} />
           </button>
@@ -260,11 +266,11 @@ function Profile() {
             className="rounded-full h-36 w-36 sm:h-52 object-cover sm:w-52"
             src={details.profile_pic}
           />
-          {/* <div className={`${update?'inline':'inline'}`}> */}
+          <div className={`${ update?'block':'hidden'}`}>
           <button onClick={loading ? null : triggerFileInput} className="absolute top-3 right-3 bg-white rounded-full p-2 shadow-md hover:bg-gray-100">
             <PencilIcon className={`w-6 h-6 ${loading ? 'text-gray-300' : 'text-green-500'}`} />
           </button>
-          {/* </div> */}
+          </div>
           {/* Hidden file input */}
           <input
             type="file"
@@ -281,10 +287,9 @@ function Profile() {
             </h1>
             <div
               className={`mr-2 sm:mr-5 w-auto bg-slate-100 p-1 sm:p-2 text-xs sm:text-sm rounded-md font-serif ${
-                details.isItTheUser ? "block" : "block"
-              }`}
+                details.isItTheUser ? 'block' : 'hidden'}`}
             >
-              <button onClick={handleProfileDataChange} className="w-full h-full flex">
+              <button onClick={loading?null:handleProfileDataChange} className="w-full h-full flex">
                 <PencilIcon className="w-5 h-7 text-green-400" />
                 <h2 className="ml-2 mt-1">Edit Profile</h2>
               </button>
@@ -315,24 +320,24 @@ function Profile() {
             <FontAwesomeIcon icon={faInstagram} className="w-10 h-7 text-gray-500" />
             </button>
           </div>
-          </div>
+        </div>
           <div className={`${update?'block':'hidden'} w-[60%] sm:w-[72%] h-52 ml-44 sm:ml-80`}>
               <div className='mt-2 ml-2'>
                 <div>Name</div>
-                <input value={updatedDetails.name} onChange={handleNameChange} className='border-2 border-black border-solid rounded-md'/>
+                <input value={details.name} disabled={loading} onChange={handleNameChange} className='border-2 border-black border-solid rounded-md'/>
               </div>
               <div className='mt-2 ml-2'>
                 <div>Position</div>
-                <input value={updatedDetails.position} onChange={handlePositionChange} className='border-2 border-black border-solid rounded-md'/>
+                <input value={details.position} disabled={loading} onChange={handlePositionChange} className='border-2 border-black border-solid rounded-md'/>
               </div>
               <div className='mt-2 ml-2'>
                 <div>
                   Location
                 </div>
-                <input value={updatedDetails.location} onChange={handleLocationChange} className='border-2 border-black border-solid rounded-md'/>
+                <input value={details.location} disabled={loading} onChange={handleLocationChange} className='border-2 border-black border-solid rounded-md'/>
               </div>
               <div className='ml-20 mt-2'>
-                <button onClick={handleUpdateProfile} className='border-2 border-black border-double'>Update</button>
+                <button onClick={handleUpdateProfile} disabled={loading} className='border-2 border-black border-double'>Update</button>
               </div>
           </div>
           
@@ -341,7 +346,7 @@ function Profile() {
       <div className="w-[90%] ml-[5%] rounded-md h-10 justify-center flex mt-5 bg-black">
         <div
           className={`w-[40%] sm:w-[12%] cursor-pointer`}
-          onClick={handleOverviewClick}
+          onClick={loading?null:handleOverviewClick}
         >
           <div
             className={`${
@@ -354,7 +359,7 @@ function Profile() {
 
         <div
           className={`w-[60%] cursor-pointer sm:w-[80%]`}
-          onClick={handlePostsClick}>
+          onClick={loading?null:handlePostsClick}>
           <div
             className={`${
               posts ? "bg-white" : "text-gray-300"
@@ -370,8 +375,8 @@ function Profile() {
         <div className={`${updateSummary?'hidden':'block'}`}>
           <div className={` flex justify-between ml-5 mt-2`}>
             <div className="font-serif font-bold text-2xl">Summary</div>
-            <div className={`${details.isItTheUser ? "block" : "block"} mr-5`}>
-              <button onClick={handleSummaryChange}>
+            <div className={`${details.isItTheUser ? "block" : "hidden"} mr-5`}>
+              <button disabled={loading} onClick={handleSummaryChange}>
               <PencilIcon className="w-5 h-7 text-green-400" />
               </button>
             </div>
@@ -385,10 +390,10 @@ function Profile() {
             <div className="font-serif font-bold text-2xl">Summary</div>
           </div>
           <div className="ml-5 my-10 mt-1 leading-6 text-slate-600">
-            <textarea onChange={handleSummaryDataChange} value={updatedDetails.summary} rows={7} cols={100} className='border-2 border-black border-solid'></textarea>
+            <textarea disabled={loading} onChange={handleSummaryDataChange} value={details.summary} rows={7} cols={100} className='border-2 border-black border-solid'></textarea>
           </div>
-          <div>
-            <button onClick={handleSummaryUpdate} className='border-2 border-black border-solid'>Update</button>
+          <div className='ml-48 -mt-5'>
+            <button disabled={loading} onClick={handleSummaryUpdate} className='border-2 border-black border-solid'>Update</button>
           </div>
         </div>
       </div>
