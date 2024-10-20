@@ -385,7 +385,7 @@ function Profile() {
             <div className="font-serif font-bold text-2xl">Summary</div>
           </div>
           <div className="ml-5 my-10 mt-1 leading-6 text-slate-600">
-            <textarea onChange={handleSummaryDataChange}  rows={7} cols={100} className='border-2 border-black border-solid'>{details.summary}</textarea>
+            <textarea onChange={handleSummaryDataChange} value={updatedDetails.summary} rows={7} cols={100} className='border-2 border-black border-solid'></textarea>
           </div>
           <div>
             <button onClick={handleSummaryUpdate} className='border-2 border-black border-solid'>Update</button>
