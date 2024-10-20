@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import Divider from './divider';
 import { Link } from 'react-router-dom';
@@ -18,7 +19,6 @@ const HorizonntalScrollCard = ({ blogs }) => {
 
   return (
     <div className='bg-white p-5 md:p-10 w-screen'>
-
       <div className='w-screen flex justify-start items-center gap-5 md:gap-10'>
         <div className='hover:text-gray-400 text-sm sm:text-lg duration-200'>PILIHAN EDITOR</div>
         <div className='hover:text-gray-400 text-sm sm:text-lg duration-200'>TECHNOLOGY</div>
@@ -26,7 +26,6 @@ const HorizonntalScrollCard = ({ blogs }) => {
         <div className='hover:text-gray-400 text-sm sm:text-lg duration-200'>ART</div>
         <div className='hover:text-gray-400 text-sm sm:text-lg duration-200'>GAMES</div>
       </div>
-
 
       <Divider />
 
@@ -36,12 +35,14 @@ const HorizonntalScrollCard = ({ blogs }) => {
             blogs.map((blog, index) => {
               if (index > 3) {
                 return (
+
                   <div key={index} className='relative min-w-[20rem] w-80 border-5 border-r border-r-gray-300 pr-5'>
                     <Link to="/post/example" onClick={() => handleCommentClick(index)} >
                     <img src={blog.image} alt='image' className='h-40 w-full object-cover' />
                     <div className='text-gray-400 mb-2'>{blog.date}</div>
                     <div className='text-2xl font-bold mb-2 text-balance'>{blog.title}</div>
                     <div><div className='text-lg text-gray-500'>{blog.brief}</div></div>
+
                     </Link>
                   </div>
                 );

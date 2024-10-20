@@ -85,6 +85,7 @@ space.
   return (
     <div>
       <div className="mx-48 my-32">
+
       <span className="text-7xl font-raleway italic">This is the Title</span>
 
       <div className="person flex items-center">

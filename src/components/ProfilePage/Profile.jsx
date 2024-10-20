@@ -9,7 +9,6 @@ export let details = {
   isItTheUser: true,
 };
 
-
 function Profile() {
   let [overview, setOverview] = useState(true);
   let [posts, setPosts] = useState(false);
