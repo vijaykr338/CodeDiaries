@@ -17,22 +17,10 @@ function Profile() {
     let [details,setDetails]=useState("");
     const [error,setError]=useState("");
     const [loading, setLoading] = useState(false)
-    // let [updatedDetails,setUpdatedDetails]=useState({
-    //   name:'',
-    //   position:'',
-    //   location:'',
-    //   summary:'',
-    //   profile_pic:null,
-    //   bg_pic:null,
-    //   isItTheUser:false
-    // })
+   
     const email= "assaf@gmail.com"||location.state.key ;
 
-    // setDetails(prevdetails=>({
-    //   ...prevdetails,
-    //   isItTheUser:"true"
-    // }))
-
+    
     useEffect(()=>{
       const fetchProfile=async()=>{
         try{
@@ -41,15 +29,7 @@ function Profile() {
           })
           console.log(response.data);
           setDetails(response.data);
-          // setUpdatedDetails(prevdetails=>({
-          //   ...prevdetails,
-          //   name:response.data.name,
-          //   location:response.data.location,
-          //   position:response.data.position,
-          //   summary:response.data.summary,
-          //   profile_pic:response.data.profile_pic,
-          //   bg_pic:response.data.bg_pic
-          // }));
+         
         }
         catch(err){
           setError(err.response.data || "An error occurred while fetching profile");
@@ -92,27 +72,19 @@ function Profile() {
         formData.append('profile_pic', file);
         
         try {
-          // Send file to the backend
           const response = await axios.post(`http://localhost:3000/profile/upload/profile`, formData, {
             withCredentials: true,
             headers: {
               'Content-Type': 'multipart/form-data'
             }
           });
-          // console.log(response.data);
       
-          // Update both 'details' and 'updatedDetails' to immediately reflect the new image
-          const updatedProfile = response.data.profile; // Assuming the backend returns the uploaded image URL
-          // console.log(response.data);
+          const updatedProfile = response.data.profile; 
           setDetails(prevdetails => ({
             ...prevdetails,
              'profile_pic' : updatedProfile.profile_pic
           }));
           
-          // setUpdatedDetails(prevdetails => ({
-          //   ...prevdetails,
-          //   'profile_pic' : updatedProfile.profile_pic
-          // }));
           setLoading(false)
         } catch (err) {
           console.error("Error uploading the image", err);
@@ -128,27 +100,19 @@ function Profile() {
         formData.append('bg_pic',file);
         
         try {
-          // Send file to the backend
           const response = await axios.post(`http://localhost:3000/profile/upload/bg`, formData, {
             withCredentials: true,
             headers: {
               'Content-Type': 'multipart/form-data'
             }
           });
-          // console.log(response.data);
       
-          // Update both 'details' and 'updatedDetails' to immediately reflect the new image
-          const updatedProfile = response.data.profile; // Assuming the backend returns the uploaded image URL
-          // console.log(response.data);
+          const updatedProfile = response.data.profile; 
           setDetails(prevdetails => ({
             ...prevdetails,
              'bg_pic' : updatedProfile.bg_pic
           }));
           
-          // setUpdatedDetails(prevdetails => ({
-          //   ...prevdetails,
-          //   'bg_pic' : updatedProfile.bg_pic
-          // }));
           setLoading(false);
         } catch (err) {
           console.error("Error uploading the image", err);
@@ -183,18 +147,13 @@ function Profile() {
 
     const handleUpdateProfile=async()=>{
       try {
-        // Send file to the backend
         const response = await axios.post(`http://localhost:3000/profile/update`, details, {
           withCredentials: true
         });
-        // console.log(response.data);
     
-        // Update both 'details' and 'updatedDetails' to immediately reflect the new image
-        const updatedProfile = response.data.profile; // Assuming the backend returns the uploaded image URL
-        // console.log(response.data);
+        const updatedProfile = response.data.profile; 
         setDetails(updatedProfile);
         
-        // setUpdatedDetails(updatedProfile);
         setLoading(false);
         setUpdate(false);
       } catch (err) {
@@ -209,18 +168,13 @@ function Profile() {
 
     const handleSummaryUpdate=async()=>{
       try {
-        // Send file to the backend
         const response = await axios.post(`http://localhost:3000/profile/update_summary`, details, {
           withCredentials: true
         });
-        // console.log(response.data);
-    
-        // Update both 'details' and 'updatedDetails' to immediately reflect the new image
-        const updatedProfile = response.data.profile; // Assuming the backend returns the uploaded image URL
-        // console.log(response.data);
+
+        const updatedProfile = response.data.profile; 
         setDetails(updatedProfile);
         
-        // setUpdatedDetails(updatedProfile);
         setLoading(false);
         setUpdateSummary(false);
       } catch (err) {
@@ -239,7 +193,7 @@ function Profile() {
   return (
 
     <div className={`${loading?'opacity-20':''} my-16`}>
-      {error && <div className='text-red-500 mt-2'>{error}</div>}
+      {error && <div className='text-red-500 mt-2'>"Something went wrong.Please try again."</div>}
        <div className={`loader2 top-[50%] left-[50%] absolute  z-50 ${loading?'block':'hidden'}`}></div>
       <div className={` w-[90vw] ml-[5vw] rounded-lg mt-5 shadow-xl h-auto relative border-2 border-slate-200 border-solid`}>
         <div className="w-full h-96">
@@ -321,23 +275,23 @@ function Profile() {
             </button>
           </div>
         </div>
-          <div className={`${update?'block':'hidden'} w-[60%] sm:w-[72%] h-52 ml-44 sm:ml-80`}>
+          <div className={`${update?'block':'hidden'} w-[60%] sm:w-[72%] h-auto ml-44 sm:ml-80`}>
               <div className='mt-2 ml-2'>
-                <div>Name</div>
-                <input value={details.name} disabled={loading} onChange={handleNameChange} className='border-2 border-black border-solid rounded-md'/>
+                <div className='text-xl font-serif'> Name</div>
+                <input value={details.name} disabled={loading} onChange={handleNameChange} className='h-10 border-2 border-slate-500 border-solid rounded-md w-80'/>
               </div>
               <div className='mt-2 ml-2'>
-                <div>Position</div>
-                <input value={details.position} disabled={loading} onChange={handlePositionChange} className='border-2 border-black border-solid rounded-md'/>
+                <div className='text-xl font-serif'>Position</div>
+                <input value={details.position} disabled={loading} onChange={handlePositionChange} className='border-2 border-slate-500 border-solid rounded-md w-80 h-10'/>
               </div>
               <div className='mt-2 ml-2'>
-                <div>
+                <div className='text-xl font-serif'>
                   Location
                 </div>
-                <input value={details.location} disabled={loading} onChange={handleLocationChange} className='border-2 border-black border-solid rounded-md'/>
+                <input value={details.location} disabled={loading} onChange={handleLocationChange} className='border-2 border-slate-500 border-solid rounded-md w-80 h-10'/>
               </div>
-              <div className='ml-20 mt-2'>
-                <button onClick={handleUpdateProfile} disabled={loading} className='border-2 border-black border-double'>Update</button>
+              <div className='ml-28 mt-2 mb-5'>
+                <button onClick={handleUpdateProfile} disabled={loading} className='border-2 bg-black text-white rounded-md w-20 h-10 border-black border-double'>Update</button>
               </div>
           </div>
           
@@ -389,11 +343,11 @@ function Profile() {
           <div className={` flex justify-between ml-5 mt-2`}>
             <div className="font-serif font-bold text-2xl">Summary</div>
           </div>
-          <div className="ml-5 my-10 mt-1 leading-6 text-slate-600">
-            <textarea disabled={loading} onChange={handleSummaryDataChange} value={details.summary} rows={7} cols={100} className='border-2 border-black border-solid'></textarea>
+          <div className="ml-5 my-10 mt-2 leading-6 text-slate-600">
+            <textarea disabled={loading} onChange={handleSummaryDataChange} value={details.summary} rows={7} cols={100} className='border-2 border-slate-600 rounded-md border-solid'></textarea>
           </div>
-          <div className='ml-48 -mt-5'>
-            <button disabled={loading} onClick={handleSummaryUpdate} className='border-2 border-black border-solid'>Update</button>
+          <div className='ml-80 -mt-7 mb-5'>
+            <button disabled={loading} onClick={handleSummaryUpdate} className='w-20 h-10 text-xl font-mono border-2 border-black bg-black text-white rounded-md border-solid'>Update</button>
           </div>
         </div>
       </div>
