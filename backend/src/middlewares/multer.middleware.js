@@ -9,7 +9,6 @@ const storage = multer.diskStorage({
     },
 
     filename: function (req, file, cb) {
-        // console.log("file",file);
         const extension = path.extname(file.originalname)
         const baseName = path.basename(file.originalname,extension)
         const suffix = uuid()
