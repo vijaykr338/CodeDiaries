@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-let details = {
+export let details = {
   name: "Assaf Rappaport",
   designation: "VP of Customer Operations",
   location: "San Francisco, CA, USA",

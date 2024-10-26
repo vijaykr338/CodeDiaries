@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import CommentBox from "./comment";
 import example from "./example.jpg";
 import person from "./person.jpg";
 import { FaHome, FaUser, FaEnvelope, FaCog } from "react-icons/fa";
@@ -83,7 +83,9 @@ space.
   );
 
   return (
-    <div className="mx-48 my-32">
+    <div>
+      <div className="mx-48 my-32">
+
       <span className="text-7xl font-raleway italic">This is the Title</span>
 
       <div className="person flex items-center">
@@ -129,6 +131,9 @@ space.
           dangerouslySetInnerHTML={{ __html: content }}
         />
       </div>
+    </div>
+      <CommentBox />
+    
     </div>
   );
 };
