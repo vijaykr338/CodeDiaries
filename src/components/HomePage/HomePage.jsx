@@ -32,10 +32,10 @@ const HomePage = () => {
   }, []);
 
   return (
-    <div className="min-h-screen w-screen bg-black">
+    <div className="min-h-screen bg-black overflow-x-hidden">
       <Header />
       <Divider />
-      <div className="w-screen">
+      <div className="w-full">
         <div className="text-8xl md:text-[8rem] lg:text-[12rem] text-white font-black text-center">
           THE BLOG
         </div>
