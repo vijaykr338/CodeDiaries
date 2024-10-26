@@ -1,6 +1,7 @@
 import JoditEditor from "jodit-react";
 import React, { useMemo, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
+import Header from "../HomePage/header";
 
 function Edit() {
    const { register, handleSubmit } = useForm();
@@ -14,7 +15,13 @@ function Edit() {
    
    return (
       <>
-         <div className="flex justify-center flex-shrink-0 bg-black h-full w-full">
+
+      {/***********************************Header*******************************************/}
+      <div className="header bg-black ">
+         <Header />
+      </div>
+      {/***********************************Editor Page***********************************/}
+         <div className="flex justify-center flex-shrink-0 bg-black h-full w-full overflow-x-hidden">
             <div className="flex w-11/12 sm:w-4/5 bg-white my-10 px-10 h-full py-6 flex-col rounded-lg">
                <div className="flex font-bold text-4xl sm:text-7xl">Create Post!</div>
                <div className="flex flex-col flex-shrink-0 sm:w-3/5 justify-start gap-6 my-7 sm:text-2xl">
@@ -36,7 +43,7 @@ function Edit() {
   className="border-2 border-black bg-black font-bold text-white py-2 px-3  rounded-full hover:shadow-xl shadow-cyan-300"
 />
                     <input
-                    className="rounded-large"
+                    className="rounded-large hidden"
                     type="textarea" value={Content} {...register("content(html)")} />
                   </form>
                   <div>
