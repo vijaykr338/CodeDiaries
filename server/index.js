@@ -9,7 +9,7 @@ app.use(express.json());
 mongoose.connect('mongodb://127.0.0.1:27017/config').then(() => console.log('Connected to MongoDB'))
   .catch(error => console.log('Error connecting to MongoDB:', error));
 
-const userSchema = new mongoose.Schema({
+const commentSchema = new mongoose.Schema({
   id: {
     type: Number, 
     required: true,
@@ -28,7 +28,7 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-const User = mongoose.model('User', userSchema);
+const Comment = mongoose.model('Comment', commentSchema);
 
 app.post("/comments", async (req, res) => {
   const { id, author, content, date } = req.body;
@@ -38,7 +38,7 @@ app.post("/comments", async (req, res) => {
   }
 
   try {
-    const newComment = new User({ id, author, content, date });
+    const newComment = new Comment({ id, author, content, date });
     const savedComment = await newComment.save();
     res.status(201).json(savedComment);
   } catch (error) {
@@ -54,7 +54,7 @@ app.get("/comments/:id", async (req, res) => {
   const postId = req.params.id; // Extract post ID from the URL
 
   try {
-    const comments = await User.find({ id: postId }); // Find comments with the matching ID
+    const comments = await Comment.find({ id: postId }); // Find comments with the matching ID
     res.status(200).json(comments);
   } catch (error) {
     console.error('Error fetching comments:', error);
@@ -69,7 +69,7 @@ app.put("/comments/:id", async (req, res) => {
   const { content } = req.body;
 
   try {
-    const updatedComment = await User.findByIdAndUpdate(id, { content }, { new: true });
+    const updatedComment = await Comment.findByIdAndUpdate(id, { content }, { new: true });
     if (!updatedComment) {
       return res.status(404).json({ message: 'Comment not found' });
     }
@@ -85,7 +85,7 @@ app.delete("/comments/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
-    const deletedComment = await User.findByIdAndDelete(id);
+    const deletedComment = await Comment.findByIdAndDelete(id);
     if (!deletedComment) {
       return res.status(404).json({ message: 'Comment not found' });
     }
