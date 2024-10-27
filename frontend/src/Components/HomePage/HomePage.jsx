@@ -7,6 +7,18 @@ import { Link } from "react-router-dom";
 const HomePage = () => {
   const [blogs, setBlogs] = useState([]);
 
+  const { selectedIndex, setSelectedIndex } = useSelectedIndex(); 
+
+  const handleCommentClick = (index) => {
+    console.log("index is ", index);
+    setSelectedIndex(index); 
+    console.log("selected index is ",selectedIndex);
+  };
+
+
+
+
+
   useEffect(() => {
     const fetchBlogs = async () => {
       try {

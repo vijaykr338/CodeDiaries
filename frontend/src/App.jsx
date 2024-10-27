@@ -7,9 +7,11 @@ import HomePage from './components/HomePage/HomePage';
 import PostPage from './components/PostCreation/PostPage';
 import Edit from './components/PostCreation/Edit';
 import ProfilePage from './components/ProfilePage/ProfilePage';
+import { SelectedIndexProvider } from './context';
 
 function App() {
   return (
+    <SelectedIndexProvider>
   <Router>
     <Routes>
     <Route path="/" element={<HomePage />} />
@@ -21,6 +23,7 @@ function App() {
   
     </Routes>
   </Router>
+  </SelectedIndexProvider>
   )
   }
 
