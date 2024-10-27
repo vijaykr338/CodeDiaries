@@ -1,14 +1,12 @@
 
-import { useState } from 'react'
-import SignUp from './components/Authentication/SignUp'
-import SignIn from './components/Authentication/SignIn'
+import SignIn from '../src/Components/Authentication/SignIn'
+import SignUp from '../src/Components/Authentication/SignUp'
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import HomePage from './components/HomePage/HomePage';
-import PostPage from './components/PostCreation/PostPage';
-import Edit from './components/PostCreation/Edit';
-import ProfilePage from './components/ProfilePage/ProfilePage';
+import HomePage from '../src/Components/HomePage/HomePage';
+import PostPage from '../src/Components/PostCreation/PostPage';
+import Edit from '../src/Components/PostCreation/Edit';
+import ProfilePage from '../src/Components/ProfilePage/ProfilePage';
 import { SelectedIndexProvider } from './context';
-
 function App() {
   return (
     <SelectedIndexProvider>

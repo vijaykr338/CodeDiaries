@@ -3,6 +3,7 @@ import Header from "./header";
 import Divider from "./divider";
 import HorizonntalScrollCard from "./horizonntalScrollCard";
 import { Link } from "react-router-dom";
+import { useSelectedIndex } from "../../context";
 
 const HomePage = () => {
   const [blogs, setBlogs] = useState([]);
