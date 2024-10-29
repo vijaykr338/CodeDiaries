@@ -1,4 +1,5 @@
 import React from 'react'
+import { GoHomeFill } from "react-icons/go";
 import { FaInstagram } from "react-icons/fa";
 import { FaFacebookSquare } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
@@ -11,12 +12,14 @@ import { Link } from 'react-router-dom'
 
 const Header = () => {
   return (
-    <div className='w-screen flex justify-between items-center pt-5 h-32 pl-5 pr-5 md:pl-10 md:pr-10 overflow-x-hidden' >
+    <div className='w-screen flex justify-between items-center pt-5 h-32 pl-5 pr-5 md:pl-10 md:pr-10 overflow-hidden' >
         <div className='flex justify-between items-center gap-2 md:gap-3 lg:gap-5' >
             <Link to="/profile/example">
             <img src={logo} className='bg-white h-10 w-10 md:h-16 md:w-16 rounded-full mr-3' /></Link>
+            <Link to="/">
+            <GoHomeFill className='text-white h-10 w-10' />
+            </Link>
             <Link to="/create-post">
-            
             <div className=' border-2 border-gray-500 px-3 py-1 rounded-xl text-gray-500 text-md md:text-xl font-bold hover:text-white duration-500 flex items-center gap-1'>
             <MdEdit className='text-2xl' /> CREATE POST</div>
             </Link>

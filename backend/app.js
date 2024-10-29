@@ -1,6 +1,7 @@
 import express from "express";
 import profileRouter from "./src/routes/profile.route.js";
-import commentsRouter from "./src/routes/comments.route.js"; // Corrected import
+import commentsRouter from "./src/routes/comments.route.js"; 
+import postsRouter from './src/routes/posts.route.js';// Corrected import
 import cors from "cors";
 
 const app = express();
@@ -19,6 +20,10 @@ app.use(express.static("public"));
 
 app.use("/profile", profileRouter);
 app.use("/comments", commentsRouter); 
+app.use('/posts', postsRouter);
+
+
+
 
 
 app.use((req, res, next) => {

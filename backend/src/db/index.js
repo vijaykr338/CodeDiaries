@@ -1,9 +1,13 @@
+
 import mongoose from "mongoose";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 export const connectDb = async () => {
   try {
     const connectionInstance = await mongoose.connect(
-      "mongodb://localhost:27017/profile"
+      process.env.MONGODB_URL
     );
     console.log("Mongoose connected successfully");
   } catch (err) {

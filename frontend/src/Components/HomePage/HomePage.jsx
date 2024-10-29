@@ -16,14 +16,10 @@ const HomePage = () => {
     console.log("selected index is ",selectedIndex);
   };
 
-
-
-
-
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const response = await fetch("src/blogs.json");
+        const response = await fetch("http://localhost:3000/posts/getposts/");
         const data = await response.json();
         setBlogs(data);
       } catch (error) {
@@ -35,7 +31,7 @@ const HomePage = () => {
   }, []);
 
   return (
-    <div className="min-h-screen w-screen bg-black">
+    <div className="min-h-screen w-full overflow-x-hidden bg-black ">
       <Header />
       <Divider />
       <div className="w-screen">
@@ -47,15 +43,15 @@ const HomePage = () => {
       <div className="flex flex-col lg:flex-row justify-between gap-16 items-center lg:items-start p-5 md:p-10 ">
         <div className="text-white h-full">
           {blogs.length > 0 && (
-            <Link to="/post/example">
+            <Link to={`/post/${blogs[0]._id}`}>
               <img
-                src={blogs[0].image}
+                src={blogs[0].coverimg}
                 alt="image"
                 className="h-96 w-full object-cover"
               />
               <div className="text-gray-600 mb-2">{blogs[0].date}</div>
               <div className="text-4xl font-bold mb-2">{blogs[0].title}</div>
-              <div className="text-lg text-gray-400">{blogs[0].brief}</div>
+              <div className="text-lg text-gray-400">{blogs[0].tags}</div>
             </Link>
           )}
         </div>
@@ -64,16 +60,16 @@ const HomePage = () => {
             if (index > 0 && index < 4) {
               return (
                 <div key={index} className="mb-4">
-                    <Link to="/post/example">
-                  <div className="flex justify-between gap-5 items-center mb-5">
-                    <img src={blog.image} className=" w-52 object-cover" />
+             <Link to={`/post/${blog._id}`}>
+                  <div className="flex  gap-5 items-center mb-5">
+                    <img src={blog.coverimg} className=" w-52 object-cover" />
                     <div>
-                      <div className="text-gray-600 mb-2 text-sm">
+                      <div className="flex text-gray-600 mb-2 text-sm">
                         {blog.date}
                       </div>
                       <div className="text-lg font-bold">{blog.title}</div>
                       <div className="text-sm text-gray-400 mb-2">
-                        {blog.brief}
+                        {blog.tags}
                       </div>
                     </div>
                   </div>
