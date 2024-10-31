@@ -1,10 +1,11 @@
-import React, { useState } from 'react' 
+import React, { useState,useRef } from 'react' 
 import { FaArrowLeft } from "react-icons/fa"; 
 import GOOGLE_ICON from "../../assets/google.svg"
 import FACEBOOK_ICON from "../../assets/facebook.svg";
 import COVER from "../../assets/codediariescover.png";
 import { useNavigate } from 'react-router-dom';
 import backgroundImage from '../../assets/bgimg.png';
+import axios from 'axios';
 
 function SignIn() {
   const navigate = useNavigate()
@@ -12,34 +13,55 @@ function SignIn() {
     navigate(-1)
   }
 
-  const [username, setUsername] = useState('')
+  const formRef = useRef(null);
+
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
   const [paragraphText, setParagraphText] = useState('');
   const [textColor, setTextColor] = useState('text-red-500')
 
-  const handleChangeUsername = (event) => {
-    setUsername(event.target.value);
+  const handleChangeEmail = (event) => {
+    setEmail(event.target.value);
   }
   const handleChangePassword = (event) => {
     setPassword(event.target.value);
   }
 
-  const handlePrint = () => {
-    if (!username || !password) {
+  const triggerSubmit = () => {
+    if (formRef.current) {
+      formRef.current.requestSubmit(); // Trigger form's submit event
+    }
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+    if (!email || !password) {
       handleErrorTextChange(0)
       return;
     }
-    // Will use later
 
-    // else if(password and username do not match){
-    //   handleErrorTextChange(1)
-    // }
+    setParagraphText('')
+    
+    try {
+      const response = await axios.post('http://localhost:4000/signin', {
+        email,
+        password,
+      });
 
-
-    console.log('Username:', username);
-    console.log('Password:', password);
-    handleTextColorChange(2)
-    setParagraphText('Login Successful')
+      if (response.data.status === 'ok') {
+        // Save the JWT token in local storage
+        localStorage.setItem('token', response.data.user);
+        // Redirect or navigate to the protected page
+        navigate('/homepage')
+      } else {
+        setError('Invalid email or password');
+        setParagraphText(response.data.message)
+      }
+    } catch (err) {
+      setError('An error occurred. Please try again later.');
+      console.error(err);
+    }
   }
   const handleErrorTextChange = (a) => {
     handleTextColorChange(a)
@@ -82,28 +104,30 @@ function SignIn() {
             <p className='text-gray-600 text-sm'>Welcome to Code Diaries</p>
           </div>
 
-          <div className='w-full flex flex-col mt-6'>
-            <input 
-              type="text"
-              placeholder='Username' 
-              value={username} 
-              onChange={handleChangeUsername}
-              className='w-full mt-7 text-black border-b border-black outline-none focus:outline-none py-4'/>
-          </div>
-          <div className='w-full flex flex-col'>
-            <input 
-              type="password"
-              placeholder='Password' 
-              value={password} 
-              onChange={handleChangePassword}
-              className='w-full text-black border-b border-black outline-none focus:outline-none py-4'/>
-          </div>
+          <form id='loginForm' ref={formRef} onSubmit={handleSubmit}>
+            <div className='w-full flex flex-col mt-6'>
+              <input 
+                type="email"
+                placeholder='Email' 
+                value={email} 
+                onChange={handleChangeEmail}
+                className='w-full mt-7 text-black border-b border-black outline-none focus:outline-none py-4'/>
+            </div>
+            <div className='w-full flex flex-col'>
+              <input 
+                type="password"
+                placeholder='Password' 
+                value={password} 
+                onChange={handleChangePassword}
+                className='w-full text-black border-b border-black outline-none focus:outline-none py-4'/>
+            </div>
+          </form>
           <div className={`${textColor} mt-4 min-h-6 font-semibold`}>
             <p>{paragraphText}</p>
           </div>
           <div className='w-full flex flex-row items-center mt-20'>
             <button className='bg-black min-w-[105px] p-2 justify-center rounded-full text-center font-semibold flex text-white transition-transform duration-300 hover:scale-110'
-                      onClick={handlePrint}>
+                      onClick={triggerSubmit}>
               Login
             </button>
             <p className='mx-[180px] text-gray-600 py-1 text-center justify-center'>or</p>

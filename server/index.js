@@ -1,14 +1,23 @@
 import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken'
 
 const app = express();
+const JWT_SECRET = 'thisisthesecretkey123123';
+const PORT = 4000;
 app.use(cors());
 app.use(express.json()); 
 
-mongoose.connect('mongodb://127.0.0.1:27017/config').then(() => console.log('Connected to MongoDB'))
+mongoose.connect('mongodb+srv://vijaykvs2016:Y4NmSswLi3N8Xh0j@cluster0.ehogv.mongodb.net/').then(() => console.log('Connected to MongoDB'))
   .catch(error => console.log('Error connecting to MongoDB:', error));
 
+const userSchema = new mongoose.Schema({
+  username: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+});
 const commentSchema = new mongoose.Schema({
   id: {
     type: Number, 
@@ -29,6 +38,80 @@ const commentSchema = new mongoose.Schema({
 });
 
 const Comment = mongoose.model('Comment', commentSchema);
+const User = mongoose.model('User', userSchema);
+
+app.post("/signup", async (req, res) => {
+  const { username, email, password} = req.body;
+
+  // Validate request body
+  if (!username || !email || !password) {
+    return res.status(400).json({ message: 'Please fill all the details' });
+  }
+
+  try {
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(409).json({ message: 'User already exists' });
+    }
+
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+    const newUser = new User({ username, email, password: hashedPassword });
+
+    
+    await newUser.save();
+    return res.status(201).json({ message: 'User registered successfully' });
+  } catch (error) {
+    console.error('Error registering user:', error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+app.post('/signin', async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    // Find the user by email
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.json({ status: 'error', message: 'Invalid email or password' });
+    }
+
+    // Compare passwords
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      return res.json({ status: 'error', message: 'Invalid email or password' });
+    }
+
+    // Generate a JWT token
+    const token = jwt.sign({ userId: user._id, email: user.email }, JWT_SECRET, { expiresIn: '1h' });
+
+    res.json({ status: 'ok', message: 'Login Successful', user: token });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ status: 'error', message: 'An error occurred. Please try again later.' });
+  }
+});
+
+const authenticateToken = (req, res, next) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+
+  if (!token) return res.status(401).json({ message: 'Access denied' });
+
+  jwt.verify(token, JWT_SECRET, (err, user) => {
+    if (err) return res.status(403).json({ message: 'Invalid token' });
+    req.user = user;
+    next();
+  });
+};
+
+app.get('/homepage', authenticateToken, (req, res) => {
+  res.json({ message: 'You have access to this protected route', user: req.user });
+});
+
+
 
 app.post("/comments", async (req, res) => {
   const { id, author, content, date } = req.body;
