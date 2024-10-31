@@ -11,6 +11,7 @@ const PostSchema = new mongoose.Schema({
   coverimg: { type: String, required: true },
   likes: { type: Number, required: true, default: 0 },
   approved: { type: Boolean, required: true, default: true },
+
 });
 
 const Posts = mongoose.model("Posts", PostSchema);

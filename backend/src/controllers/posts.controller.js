@@ -1,4 +1,6 @@
 import Posts from '../models/posts.model.js'; // Import the Posts model
+import { User } from '../models/user.model.js';
+
 
 // Create a new post
 export const createPost = async (req, res) => {
@@ -17,7 +19,8 @@ export const createPost = async (req, res) => {
             date: new Date(), // Setting the date to the current date
             content: content,
             tags: Tags,
-            coverimg: img_url
+            coverimg: img_url,
+            author: req.user._id
         });
 
         res.status(201).json({ message: 'Data received and post created successfully', post: newPost });

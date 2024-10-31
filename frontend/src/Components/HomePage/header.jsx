@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { GoHomeFill } from "react-icons/go";
 import { FaInstagram } from "react-icons/fa";
 import { FaFacebookSquare } from "react-icons/fa";
@@ -10,7 +10,17 @@ import Button from './Button'
 import { Link } from 'react-router-dom'
 
 
+import { AuthContext } from "../../AuthContext"
+
+
 const Header = () => {
+
+
+ const { user, loading, logout } = useContext(AuthContext); 
+
+const handleLogout = () => {
+    logout();
+  };
   return (
     <div className='w-screen flex justify-between items-center pt-5 h-32 pl-5 pr-5 md:pl-10 md:pr-10 overflow-hidden' >
         <div className='flex justify-between items-center gap-2 md:gap-3 lg:gap-5' >
@@ -31,8 +41,20 @@ const Header = () => {
             <FaFacebookSquare className='text-[#3b5999] h-12 w-12' />
             <FaXTwitter className='text-white h-12 w-12' />
         </div>
-        <Link to="/signup"> <Button title="Sign Up"></Button></Link>
-           <Link to="/signin">  <Button title="Sign In"></Button></Link>
+        {user ? (
+          <button onClick={handleLogout} className="bg-white text-black border border-gray-300 px-4 py-2 rounded cursor-pointer text-lg">
+            Logout
+          </button>
+        ) : (
+          <>
+            <Link to="/signup">
+              <Button title="Sign Up" />
+            </Link>
+            <Link to="/signin">
+              <Button title="Sign In" />
+            </Link>
+          </>
+        )}
             <GiHamburgerMenu className='text-white h-10 w-10'/>
         </div>
     </div>

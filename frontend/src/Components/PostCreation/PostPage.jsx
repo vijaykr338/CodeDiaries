@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from 'react-router-dom';
 import axios from "axios"
-
 import example from "./example.jpg";
 import person from "./person.jpg";
 import { FaHome, FaUser, FaEnvelope, FaCog } from "react-icons/fa";
@@ -87,6 +86,8 @@ const PostPage = () => {
     );
   const [post, setPost] = useState(null);
   const { id } = useParams();
+
+  
   useEffect(() => {
     const fetchPost = async () => {
       try {

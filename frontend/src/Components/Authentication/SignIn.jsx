@@ -5,6 +5,7 @@ import FACEBOOK_ICON from "../../assets/facebook.svg";
 import COVER from "../../assets/codediariescover.png";
 import { useNavigate } from 'react-router-dom';
 import backgroundImage from '../../assets/bgimg.png';
+import axios from 'axios'
 
 function SignIn() {
   const navigate = useNavigate()
@@ -58,6 +59,37 @@ function SignIn() {
     }
   }
 
+  const handleLogin = async () => {
+    if (!username || !password) {
+      handleErrorTextChange(0);
+      return;
+    }
+ 
+    console.log('Sending login request with:', { username, password });
+  
+    try {
+      const response = await axios.post('http://localhost:3000/auth/signin', {
+        username: username,
+        password: password,
+      });
+  
+      // Handle successful login
+      console.log('Login response:', response.data);
+      handleTextColorChange(2);
+      setParagraphText('Login Successful');
+      console.log('Login successful:', response.data);
+  
+      // Store the authentication token
+      localStorage.setItem('authToken', response.data.user);
+  
+      // Redirect to the homepage or another page
+      navigate('/');
+    } catch (error) {
+      console.error('Error during login:', error);
+      handleErrorTextChange(1);
+    }
+  };
+
   return (
     <div className="grid grid-cols-2 p-8 bg-gray-100 min-h-screen bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url(${backgroundImage})` }}>
@@ -103,7 +135,7 @@ function SignIn() {
           </div>
           <div className='w-full flex flex-row items-center mt-20'>
             <button className='bg-black min-w-[105px] p-2 justify-center rounded-full text-center font-semibold flex text-white transition-transform duration-300 hover:scale-110'
-                      onClick={handlePrint}>
+                      onClick={handleLogin}>
               Login
             </button>
             <p className='mx-[180px] text-gray-600 py-1 text-center justify-center'>or</p>

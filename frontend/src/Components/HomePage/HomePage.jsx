@@ -1,14 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import Header from "./header";
 import Divider from "./divider";
 import HorizonntalScrollCard from "./horizonntalScrollCard";
 import { Link } from "react-router-dom";
+
 import { useSelectedIndex } from "../../context";
+import { AuthContext } from "../../AuthContext"
 
 const HomePage = () => {
   const [blogs, setBlogs] = useState([]);
 
   const { selectedIndex, setSelectedIndex } = useSelectedIndex(); 
+  const { user, loading } = useContext(AuthContext); 
+
+  useEffect(() => {
+    if (!loading) {
+      console.log("This is the user -> ", user);
+    }
+  }, [loading, user]);
 
   const handleCommentClick = (index) => {
     console.log("index is ", index);
