@@ -8,21 +8,22 @@ import PostPage from './components/PostCreation/PostPage';
 import Edit from './components/PostCreation/Edit';
 import ProfilePage from './components/ProfilePage/ProfilePage';
 import { SelectedIndexProvider } from './context';
+import PrivateRoute from './routes/PrivateRoute';
 
 function App() {
   return (
-    <SelectedIndexProvider>
-  <Router>
-    <Routes>
-    <Route path="/" element={<HomePage />} />
-    <Route path="/signup" element={<SignUp />} />
-    <Route path="/signin" element={<SignIn />} />
-    <Route path="/post/example" element={<PostPage/>} /> 
-    <Route path="/create-post" element={<Edit/>} /> 
-    <Route path='/profile/example' element={<ProfilePage/>}/>
-  
-    </Routes>
-  </Router>
+  <SelectedIndexProvider>
+    <Router>
+      <Routes>
+        <Route path="/" element={<SignIn />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/signin" element={<SignIn />} />
+        <Route path='/homepage' element= {<PrivateRoute> <HomePage /> </PrivateRoute>} />
+        <Route path="/post/example" element={<PostPage/>} /> 
+        <Route path="/create-post" element={<Edit/>}/> 
+        <Route path='/profile/example' element={<ProfilePage/>}/>
+      </Routes>
+    </Router>
   </SelectedIndexProvider>
   )
   }
