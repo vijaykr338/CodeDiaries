@@ -116,7 +116,7 @@ const PostPage = () => {
       <div className="person flex items-center">
         <img src={person} alt="some" className="rounded-full h-20 my-10" />
         <div className="mx-8 space-y-1 flex flex-col">
-          <span className="text-lg font-bold">By Akira</span>
+        <span className="text-lg font-bold">By {post.authorName}</span>
           <span className="text-md font-light">{post.date}</span>
         </div>
       </div>

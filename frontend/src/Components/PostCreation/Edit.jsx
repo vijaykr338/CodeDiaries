@@ -2,11 +2,20 @@ import JoditEditor from "jodit-react";
 import { Bounce, ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import React, { useMemo, useRef, useState } from "react";
+import React, { useMemo, useRef, useState, useContext } from "react";
 import { useForm } from "react-hook-form";
 import Header from "../HomePage/header";
+import { AuthContext } from "../../AuthContext";
 
 function Edit() {
+
+    const { user } = useContext(AuthContext);
+    const editor = useRef(null);
+    const [Content, setContent] = useState("");
+    const { register, handleSubmit, reset } = useForm();
+
+
+
   const notify = () =>
     toast.success("Post Created", {
       position: "top-right",
@@ -19,34 +28,34 @@ function Edit() {
       theme: "dark",
       transition: Bounce,
     });
-  const { register, handleSubmit, reset } = useForm();
 
   const OnSubmit = async (data) => {
-   data.Content = Content;
-   const token = localStorage.getItem('authToken');
-   if (!token) {
-     console.error('No authentication token found');
-     return;
-   }
+    data.Content = Content;
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+      console.error('No authentication token found');
+      return;
+    }
 
-   let r = await fetch('http://localhost:3000/posts/create-post', {
-     method: "POST",
-     headers: {
-       'Content-Type': 'application/json',
-       'Authorization': `Bearer ${token}`,
-     },
-     body: JSON.stringify(data),
-   });
+    // Include the author's information in the post data
+    data.authorName = user.username;
+    data.authorEmail = user.email;
 
-   let res = await r.text();
-   console.log(data, res);
-   reset();
-   setContent('');
-   notify();
- };
+    let r = await fetch('http://localhost:3000/posts/create-post', {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+      body: JSON.stringify(data),
+    });
 
-  const editor = useRef(null);
-  const [Content, setContent] = useState("");
+    let res = await r.text();
+    console.log(data, res);
+    reset();
+    setContent('');
+    notify();
+  };
 
   return (
     <>
