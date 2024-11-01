@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
-
+import React, { useState, useEffect, useContext } from 'react';
+import { AuthContext } from '../../AuthContext';
 import { useParams } from 'react-router-dom';
 
-const CommentBox = ({ user }) => {
+const CommentBox = () => {
   const { id } = useParams();
 
-
+  const { user } = useContext(AuthContext)
   const [comment, setComment] = useState('');
   const [comments, setComments] = useState([]);
   const [editCommentId, setEditCommentId] = useState(null);
@@ -56,7 +56,7 @@ const CommentBox = ({ user }) => {
 
     const newComment = {
       id: newId,
-      author: user,
+      author: user.username,
 
       content: comment,
       date: new Date(),

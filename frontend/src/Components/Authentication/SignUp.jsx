@@ -6,9 +6,6 @@ import COVER from "../../assets/codediariescover.png";
 import { useNavigate } from 'react-router-dom';
 import backgroundImage from '../../assets/bgimg.png';
 
-import axios from 'axios'
-
-
 function SignUp() {
   const navigate = useNavigate();
   const goBack = () => navigate(-1);
@@ -20,9 +17,6 @@ function SignUp() {
   const [password, setPassword] = useState('');
   const [retypePassword, setReTypePassword] = useState('');
   const [paragraphText, setParagraphText] = useState('');
-
-  const [error, setError] = useState('');
-
   const [textColor, setTextColor] = useState('text-red-500');
 
   const handleChangeUsername = (event) => setUsername(event.target.value);
@@ -64,27 +58,30 @@ function SignUp() {
     // Clear error text
     setParagraphText('');
 
-
-    // Send sdata to the backend
-    try {
-      const response = await axios.post('http://localhost:3000/auth/signup', {
-        username: username,
-        email: email,
-        password: password,
-      });
-  
-      if (response.data.status === 'ok') {
-        localStorage.setItem('token', response.data.user)
-        navigate('/')
-      } else {
-        setError('User already exists');
-        setParagraphText(response.data.message)
+    // Send data to backend
+    await fetch('http://localhost:3000/auth/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ username, email, password }),
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Failed to register');
       }
-    } catch (err) {
-      setError('An error occurred. Please try again later.');
-      console.error(err);
-    }
-
+      return response.json();
+    })
+    .then(data => {
+      handleTextColorChange(2);
+      setParagraphText('Registration successful');
+      console.log('Success:', data);
+    })
+    .catch(error => {
+      handleTextColorChange(0);
+      setParagraphText('Registration failed. Try again later.');
+      console.error('Error:', error);
+    });
   };
 
   return (

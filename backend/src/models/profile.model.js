@@ -35,7 +35,7 @@ const profileSchema=new mongoose.Schema({
     },
     isItTheUser:{
         type:Boolean,
-        default:false
+        default:true
     }
 })
 

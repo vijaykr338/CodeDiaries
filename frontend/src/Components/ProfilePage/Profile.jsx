@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import axios from "axios";
 import {InboxIcon} from "@heroicons/react/outline";
 import { useLocation } from 'react-router-dom';
@@ -6,10 +6,10 @@ import { PencilIcon } from '@heroicons/react/solid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLinkedin , faGithub, faInstagram} from '@fortawesome/free-brands-svg-icons';
 import { XIcon } from '@heroicons/react/solid';
+import { AuthContext } from '../../AuthContext'
 
-
-function Profile() {
-  const location=useLocation();
+function Profile({email}) {
+  const { user, loading: authLoading } = useContext(AuthContext);
     let [overview,setOverview]=useState(true);
     let [posts,setPosts]=useState(false);
     let [update,setUpdate]=useState(false);
@@ -17,11 +17,8 @@ function Profile() {
     let [details,setDetails]=useState("");
     const [error,setError]=useState("");
     const [loading, setLoading] = useState(false)
-
     const [userPosts,setUserPosts]=useState([]);
-   
-    const email= "assaf@gmail.com"||location.state.key ;
-
+    
     
     useEffect(()=>{
       const fetchProfile=async()=>{
@@ -29,9 +26,7 @@ function Profile() {
           const response=await axios.get(`http://localhost:3000/profile/viewprofile/${email}`,{
             withCredentials:true
           })
-
           // console.log(response.data);
-
           setDetails(response.data);
          
         }
@@ -48,7 +43,14 @@ function Profile() {
       console.log("Updated profile",details)
     },[details]);
 
-
+    useEffect(() => {
+      if (user && details.email === user.email) {
+        setDetails(prevDetails => ({
+          ...prevDetails,
+          isItTheUser: true
+        }));
+      }
+    }, [user, details.email]);
 
     useEffect(()=>{
       const fetchUsersPosts=async()=>{
@@ -72,6 +74,8 @@ function Profile() {
     useEffect(()=>{
       console.log("Updated posts",userPosts)
     },[userPosts]);
+
+
 
     const handleOverviewClick=()=>{
         setOverview(true);
@@ -101,7 +105,7 @@ function Profile() {
         formData.append('profile_pic', file);
         
         try {
-          const response = await axios.post(`http://localhost:3000/profile/upload/profile`, formData, {
+          const response = await axios.post(`http://localhost:3000/profile/upload/profile/${email}`, formData, {
             withCredentials: true,
             headers: {
               'Content-Type': 'multipart/form-data'
@@ -129,7 +133,7 @@ function Profile() {
         formData.append('bg_pic',file);
         
         try {
-          const response = await axios.post(`http://localhost:3000/profile/upload/bg`, formData, {
+          const response = await axios.post(`http://localhost:3000/profile/upload/bg/${email}`, formData, {
             withCredentials: true,
             headers: {
               'Content-Type': 'multipart/form-data'
@@ -176,7 +180,7 @@ function Profile() {
 
     const handleUpdateProfile=async()=>{
       try {
-        const response = await axios.post(`http://localhost:3000/profile/update`, details, {
+        const response = await axios.post(`http://localhost:3000/profile/update/${email}`, details, {
           withCredentials: true
         });
     
@@ -197,7 +201,7 @@ function Profile() {
 
     const handleSummaryUpdate=async()=>{
       try {
-        const response = await axios.post(`http://localhost:3000/profile/update_summary`, details, {
+        const response = await axios.post(`http://localhost:3000/profile/update_summary/${email}`, details, {
           withCredentials: true
         });
 
@@ -230,7 +234,10 @@ function Profile() {
             className="w-full h-96 rounded-tl-lg object-cover rounded-tr-lg"
             src={details.bg_pic}
           />
-          <div className={`${update?'block':'hidden'}`}>
+
+
+
+        <div className={`${details.isItTheUser?'block':'hidden'}`}>
           <button onClick={loading ? null : triggerbgInput} className="absolute top-3 right-3 bg-white rounded-full p-2 shadow-md hover:bg-gray-100">
             <PencilIcon className={`w-6 h-6 ${loading ? 'text-gray-300' : 'text-green-500'}`} />
           </button>
@@ -388,7 +395,6 @@ function Profile() {
         <div className='ml-5 mt-5 mb-5'>
           <div className="font-serif font-bold text-2xl">Posts</div>
           <div>
-
             {!userPosts?"No Posts Found" : userPosts.map((post,index)=>(
               <div key={index} className="w-full h-full flex rounded overflow-hidden shadow-lg bg-white my-4">
               <div className="w-1/2 h-full">
@@ -405,7 +411,6 @@ function Profile() {
             
             
             ))}
-
           </div>
         </div>
       </div>

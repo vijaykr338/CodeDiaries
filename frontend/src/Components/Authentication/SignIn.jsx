@@ -15,9 +15,6 @@ function SignIn() {
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-
-  const [error, setError] = useState('')
-
   const [paragraphText, setParagraphText] = useState('');
   const [textColor, setTextColor] = useState('text-red-500')
 
@@ -28,8 +25,23 @@ function SignIn() {
     setPassword(event.target.value);
   }
 
+  const handlePrint = () => {
+    if (!username || !password) {
+      handleErrorTextChange(0)
+      return;
+    }
+    // Will use later
+
+    // else if(password and username do not match){
+    //   handleErrorTextChange(1)
+    // }
 
 
+    console.log('Username:', username);
+    console.log('Password:', password);
+    handleTextColorChange(2)
+    setParagraphText('Login Successful')
+  }
   const handleErrorTextChange = (a) => {
     handleTextColorChange(a)
     if(a===0) {
@@ -61,20 +73,20 @@ function SignIn() {
         password: password,
       });
   
-
-      if (response.data.status === 'ok') {
-        // Save the JWT token in local storage
-        localStorage.setItem('token', response.data.user);
-        // Redirect or navigate to the protected page
-        navigate('/')
-      } else {
-        setError('Invalid email or password');
-        setParagraphText(response.data.message)
-      }
-    } catch (err) {
-      setError('An error occurred. Please try again later.');
-      console.error(err);
-
+      // Handle successful login
+      console.log('Login response:', response.data);
+      handleTextColorChange(2);
+      setParagraphText('Login Successful');
+      console.log('Login successful:', response.data);
+  
+      // Store the authentication token
+      localStorage.setItem('authToken', response.data.user);
+  
+      // Redirect to the homepage or another page
+      navigate('/');
+    } catch (error) {
+      console.error('Error during login:', error);
+      handleErrorTextChange(1);
     }
   };
 

@@ -1,16 +1,15 @@
 import { Profile } from "../models/profile.model.js";
 import mongoose from "mongoose";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
-
 import Posts from "../models/posts.model.js";
-
 
 const viewProfile = async (req, res) => {
   try {
    
-    const email=req.params.email;
+    const email = req.params.email;
+    console.log(email)
     const profile = await Profile.findOne({email});
-
+    console.log(profile)
     if (!profile) {
       return res.status(404).send("User not found");
     }
@@ -23,7 +22,7 @@ const viewProfile = async (req, res) => {
 };
 
 const uploadProfile=async(req,res)=>{
-  const email= "assaf@gmail.com"|| req.session.email;
+  const email=  req.params.email;
   if (!email) {
     return res.status(401).send("Unauthorized! Please Log In");
   }
@@ -56,7 +55,7 @@ const uploadProfile=async(req,res)=>{
 }
 
 const uploadBg=async(req,res)=>{
-  const email= "assaf@gmail.com"|| req.session.email;
+  const email=  req.params.email;
   if (!email) {
     return res.status(401).send("Unauthorized! Please Log In");
   }
@@ -91,7 +90,7 @@ const uploadBg=async(req,res)=>{
 }
 
 const updateProfile = async (req, res) => {
-  const email ="assaf@gmail.com"|| req.session.email;
+  const email = req.params.email;
   if (!email) {
     return res.status(401).send("Unauthorized! Please Log In");
   }
@@ -119,7 +118,7 @@ const updateProfile = async (req, res) => {
 };
 
 const updateSummary = async (req, res) => {
-  const email ="assaf@gmail.com"|| req.session.email;
+  const email = req.params.email;
   if (!email) {
     return res.status(401).send("Unauthorized! Please Log In");
   }
