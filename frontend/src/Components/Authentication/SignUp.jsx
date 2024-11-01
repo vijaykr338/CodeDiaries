@@ -69,6 +69,7 @@ function SignUp() {
       });
   
       if (response.data.status === 'ok') {
+        localStorage.setItem('token', response.data.user)
         navigate('/')
       } else {
         setError('User already exists');

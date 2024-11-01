@@ -15,15 +15,17 @@ export const signup = async (req, res) => {
 
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
-    // console.log(hashedPassword);
 
     const newUser = new User({ username, email, password: hashedPassword });
     await newUser.save();
 
-    return res.json({ status: 'ok', message: 'User registered successfully' });
+    const token = jwt.sign({ userId: username, email }, process.env.JWT_SECRET, { expiresIn: '1h' });
+
+
+    return res.json({ status: 'ok', message: 'User registered successfully', user: token });
   } catch (error) {
     console.error('Error registering user:', error);
-    return res.status(500).json({ message: 'Internal server error' });
+    return res.json({ status:'error', message: 'Internal server error' });
   }
 };
 
