@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
+
 import { useParams } from 'react-router-dom';
 
 const CommentBox = ({ user }) => {
   const { id } = useParams();
 
+
   const [comment, setComment] = useState('');
   const [comments, setComments] = useState([]);
   const [editCommentId, setEditCommentId] = useState(null);
   const [editCommentContent, setEditCommentContent] = useState('');
+
 
   console.log("id is", id);
   console.log("user is:", user);
@@ -33,13 +36,16 @@ const CommentBox = ({ user }) => {
         }
         const data = await response.json();
         setComments(data);
+
       } catch (error) {
         console.error('Error fetching comments:', error);
       }
     };
 
     fetchComments();
+
   }, [id]);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -51,11 +57,13 @@ const CommentBox = ({ user }) => {
     const newComment = {
       id: newId,
       author: user,
+
       content: comment,
       date: new Date(),
     };
 
     try {
+
       const response = await fetch('http://localhost:3000/comments/comments', {
         method: 'POST',
         headers: {
@@ -70,6 +78,7 @@ const CommentBox = ({ user }) => {
 
       const savedComment = await response.json();
       setComments((prevComments) => [...prevComments, savedComment]);
+
     } catch (error) {
       console.error('Error submitting the comment:', error);
     }
@@ -85,6 +94,7 @@ const CommentBox = ({ user }) => {
   const handleUpdateComment = async (commentId) => {
     try {
       const updatedComment = { content: editCommentContent };
+
       const response = await fetch(`http://localhost:3000/comments/comments/${commentId}`, {
         method: 'PUT',
         headers: {
@@ -101,6 +111,7 @@ const CommentBox = ({ user }) => {
       setComments((prevComments) =>
         prevComments.map((comment) =>
           comment._id === commentId ? { ...comment, content: updatedData.content } : comment
+
         )
       );
       setEditCommentId(null);
@@ -112,6 +123,7 @@ const CommentBox = ({ user }) => {
 
   const handleDeleteComment = async (commentId) => {
     try {
+
       const response = await fetch(`http://localhost:3000/comments/comments/${commentId}`, {
         method: 'DELETE',
       });
@@ -119,6 +131,7 @@ const CommentBox = ({ user }) => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
+
 
       setComments((prevComments) => prevComments.filter((comment) => comment._id !== commentId));
     } catch (error) {
@@ -128,6 +141,7 @@ const CommentBox = ({ user }) => {
 
   return (
     <div className='w-full bg-white p-4'>
+
       <form className='flex justify-between w-full items-baseline mb-4' onSubmit={handleSubmit}>
         <input
           type='text'
@@ -145,8 +159,10 @@ const CommentBox = ({ user }) => {
       <div className='overflow-y-auto h-[25rem]'>
         <div className='w-full p-4'>
           {comments.length > 0 ? (
+
             comments.map((commentItem, index) => (
               <div key={index} className='border-b mb-4 pb-2'>
+
                 <p><strong>{commentItem.author}</strong> on {new Date(commentItem.date).toLocaleDateString()}</p>
                 {editCommentId === commentItem._id ? (
                   <div>

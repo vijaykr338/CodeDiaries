@@ -17,7 +17,7 @@ const Header = () => {
 
 
  const { user, loading, logout } = useContext(AuthContext); 
- console.log("hwello");
+
 
 const handleLogout = () => {
     logout();

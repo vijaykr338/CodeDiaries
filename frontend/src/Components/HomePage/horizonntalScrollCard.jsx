@@ -2,9 +2,20 @@
 import React, { useState } from 'react';
 import Divider from './divider';
 import { Link } from 'react-router-dom';
+import { useSelectedIndex } from "../../context"; 
+import { useEffect } from 'react';
 
 const HorizonntalScrollCard = ({ blogs }) => {
 
+  const { selectedIndex, setSelectedIndex } = useSelectedIndex(); 
+
+  const handleCommentClick =  (index) => {
+     setSelectedIndex(index); 
+  };
+
+  useEffect(() => {
+    console.log('Selected Index updated:', selectedIndex);
+  }, [selectedIndex]);
 
   return (
     <div className='bg-white p-5 md:p-10 w-screen'>

@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from 'react-router-dom';
 import axios from "axios"
+
 import CommentBox from './comment'
+
 import person from "./person.jpg";
 import { FaHome, FaUser, FaEnvelope, FaCog } from "react-icons/fa";
 
@@ -109,6 +111,7 @@ const PostPage = () => {
   console.log("post details:" , post );
 
 
+
   return (
     <div className="mx-48 my-32">
       <span className="text-7xl font-raleway italic">{post.title}</span>
@@ -156,7 +159,9 @@ const PostPage = () => {
           dangerouslySetInnerHTML={{ __html: post.content }}
         />
       </div>
+
       <CommentBox user={post.authorName} />
+
     </div>
   );
 };

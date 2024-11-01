@@ -17,6 +17,8 @@ function Profile() {
     let [details,setDetails]=useState("");
     const [error,setError]=useState("");
     const [loading, setLoading] = useState(false)
+
+    const [userPosts,setUserPosts]=useState([]);
    
     const email= "assaf@gmail.com"||location.state.key ;
 
@@ -27,7 +29,9 @@ function Profile() {
           const response=await axios.get(`http://localhost:3000/profile/viewprofile/${email}`,{
             withCredentials:true
           })
-          console.log(response.data);
+
+          // console.log(response.data);
+
           setDetails(response.data);
          
         }
@@ -43,6 +47,31 @@ function Profile() {
     useEffect(()=>{
       console.log("Updated profile",details)
     },[details]);
+
+
+
+    useEffect(()=>{
+      const fetchUsersPosts=async()=>{
+        try{
+          const response=await axios.get(`http://localhost:3000/profile/getUsersPosts/${email}`,{
+            withCredentials:true
+          })
+          console.log(response.data);
+          setUserPosts(response.data);
+         
+        }
+        catch(err){
+          // setError(err.response.data || "An error occurred while fetching profile");
+        console.error(err);
+        }
+      }
+
+      fetchUsersPosts();
+    },[]);
+
+    useEffect(()=>{
+      console.log("Updated posts",userPosts)
+    },[userPosts]);
 
     const handleOverviewClick=()=>{
         setOverview(true);
@@ -359,7 +388,24 @@ function Profile() {
         <div className='ml-5 mt-5 mb-5'>
           <div className="font-serif font-bold text-2xl">Posts</div>
           <div>
-            All posts goes here...
+
+            {!userPosts?"No Posts Found" : userPosts.map((post,index)=>(
+              <div key={index} className="w-full h-full flex rounded overflow-hidden shadow-lg bg-white my-4">
+              <div className="w-1/2 h-full">
+                <img className="w-full h-full object-cover" src={post.coverimg} alt={post.title} />
+              </div>
+              <div className="w-1/2 h-full px-6 py-4 flex flex-col justify-center">
+                <h2 className="font-bold text-xl mb-2 text-gray-800">{post.title}</h2>
+                {/* <p className="text-gray-600 text-base">
+                  {post.description || "No description available."}
+                </p> */}
+              </div>
+            </div>
+            
+            
+            
+            ))}
+
           </div>
         </div>
       </div>
