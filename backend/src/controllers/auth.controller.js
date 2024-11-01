@@ -5,24 +5,22 @@ import jwt from "jsonwebtoken"
 export const signup = async (req, res) => {
   const { username, email, password } = req.body;
 
-  if (!username || !email || !password) {
-    return res.status(400).json({ message: 'Please fill all the details' });
-  }
+
 
   try {
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.status(409).json({ message: 'User already exists' });
+      return res.json({ status: 'error', message: 'User already exists' });
     }
 
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
-    console.log(hashedPassword);
+    // console.log(hashedPassword);
 
     const newUser = new User({ username, email, password: hashedPassword });
     await newUser.save();
 
-    return res.status(201).json({ message: 'User registered successfully' });
+    return res.json({ status: 'ok', message: 'User registered successfully' });
   } catch (error) {
     console.error('Error registering user:', error);
     return res.status(500).json({ message: 'Internal server error' });
