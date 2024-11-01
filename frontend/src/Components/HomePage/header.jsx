@@ -21,6 +21,18 @@ const Header = () => {
 const handleLogout = () => {
     logout();
   };
+
+  if (loading) {
+    return (
+      <div className="w-screen flex justify-center items-center pt-5 h-32 pl-5 pr-5 md:pl-10 md:pr-10 overflow-hidden">
+        <div className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full text-white" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    );
+  }
+
+
   return (
     <div className='w-screen flex justify-between items-center pt-5 h-32 pl-5 pr-5 md:pl-10 md:pr-10 overflow-hidden' >
         <div className='flex justify-between items-center gap-2 md:gap-3 lg:gap-5' >
@@ -30,8 +42,8 @@ const handleLogout = () => {
             <GoHomeFill className='text-white h-10 w-10' />
             </Link>
             <Link to="/create-post">
-            <div className=' border-2 border-gray-500 px-3 py-1 rounded-xl text-gray-500 text-md md:text-xl font-bold hover:text-white duration-500 flex items-center gap-1'>
-            <MdEdit className='text-2xl' /> CREATE POST</div>
+            {user ? <div className=' border-2 border-gray-500 px-3 py-1 rounded-xl text-gray-500 text-md md:text-xl font-bold hover:text-white duration-500 flex items-center gap-1'>
+            <MdEdit className='text-2xl' /> CREATE POST</div> : null}
             </Link>
           
         </div>

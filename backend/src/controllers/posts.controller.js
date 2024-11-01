@@ -13,6 +13,12 @@ export const createPost = async (req, res) => {
     } = postData;
 
     try {
+        // Find the user by ID
+        const user = await User.findById(req.user.userId);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
         // Create and save the new post document in MongoDB
         const newPost = await Posts.create({
             title: title,
@@ -20,7 +26,9 @@ export const createPost = async (req, res) => {
             content: content,
             tags: Tags,
             coverimg: img_url,
-            author: req.user._id
+            author: user._id,
+            authorName: user.username, // Include the author's username
+            authorEmail: user.email // Include the author's email
         });
 
         res.status(201).json({ message: 'Data received and post created successfully', post: newPost });
