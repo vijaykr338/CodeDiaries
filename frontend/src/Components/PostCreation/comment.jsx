@@ -1,42 +1,84 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { details } from '../ProfilePage/Profile';
-import { useSelectedIndex } from "../../context"; 
 
-const CommentBox = () => {
-  const { selectedIndex } = useSelectedIndex(); 
+import { useParams } from 'react-router-dom';
+
+const CommentBox = ({ user }) => {
+  const { id } = useParams();
+
+
   const [comment, setComment] = useState('');
   const [comments, setComments] = useState([]);
   const [editCommentId, setEditCommentId] = useState(null);
   const [editCommentContent, setEditCommentContent] = useState('');
 
+
+  console.log("id is", id);
+  console.log("user is:", user);
+
+  function convertStringToASCIIInt(input) {
+    let asciiString = '';
+
+    for (let char of input) {
+        asciiString += char.charCodeAt(0); 
+    }
+
+    return asciiString; 
+}
+
   useEffect(() => {
     const fetchComments = async () => {
-
+      const newId = convertStringToASCIIInt(id);
+      console.log(newId);
       try {
-        const response = await axios.get(`http://localhost:4000/comments/${selectedIndex}`);
-        setComments(response.data);
+        const response = await fetch(`http://localhost:3000/comments/comments/${newId}`);
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        setComments(data);
+
       } catch (error) {
         console.error('Error fetching comments:', error);
       }
     };
 
     fetchComments();
-  }, [selectedIndex]);
+
+  }, [id]);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const newId = convertStringToASCIIInt(id);
+
+    console.log(newId);
+
     const newComment = {
-      id: selectedIndex,
-      author: details.name,
+      id: newId,
+      author: user,
+
       content: comment,
       date: new Date(),
     };
 
     try {
-      const response = await axios.post('http://localhost:4000/comments', newComment);
-      setComments((prevComments) => [...prevComments, response.data]);
+
+      const response = await fetch('http://localhost:3000/comments/comments', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newComment),
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const savedComment = await response.json();
+      setComments((prevComments) => [...prevComments, savedComment]);
+
     } catch (error) {
       console.error('Error submitting the comment:', error);
     }
@@ -52,10 +94,24 @@ const CommentBox = () => {
   const handleUpdateComment = async (commentId) => {
     try {
       const updatedComment = { content: editCommentContent };
-      const response = await axios.put(`http://localhost:4000/comments/${commentId}`, updatedComment);
+
+      const response = await fetch(`http://localhost:3000/comments/comments/${commentId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedComment),
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const updatedData = await response.json();
       setComments((prevComments) =>
         prevComments.map((comment) =>
-          comment._id === commentId ? { ...comment, content: editCommentContent } : comment
+          comment._id === commentId ? { ...comment, content: updatedData.content } : comment
+
         )
       );
       setEditCommentId(null);
@@ -67,7 +123,16 @@ const CommentBox = () => {
 
   const handleDeleteComment = async (commentId) => {
     try {
-      await axios.delete(`http://localhost:4000/comments/${commentId}`);
+
+      const response = await fetch(`http://localhost:3000/comments/comments/${commentId}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+
       setComments((prevComments) => prevComments.filter((comment) => comment._id !== commentId));
     } catch (error) {
       console.error('Error deleting the comment:', error);
@@ -76,10 +141,7 @@ const CommentBox = () => {
 
   return (
     <div className='w-full bg-white p-4'>
-      <div className='flex justify-between items-center mb-4'>
-        <button className='text-gray-500 hover:text-gray-800'>
-        </button>
-      </div>
+
       <form className='flex justify-between w-full items-baseline mb-4' onSubmit={handleSubmit}>
         <input
           type='text'
@@ -97,8 +159,10 @@ const CommentBox = () => {
       <div className='overflow-y-auto h-[25rem]'>
         <div className='w-full p-4'>
           {comments.length > 0 ? (
-            comments.map((commentItem) => (
-              <div key={commentItem._id} className='border-b mb-4 pb-2'>
+
+            comments.map((commentItem, index) => (
+              <div key={index} className='border-b mb-4 pb-2'>
+
                 <p><strong>{commentItem.author}</strong> on {new Date(commentItem.date).toLocaleDateString()}</p>
                 {editCommentId === commentItem._id ? (
                   <div>

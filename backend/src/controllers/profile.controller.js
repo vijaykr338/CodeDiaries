@@ -1,7 +1,9 @@
 import { Profile } from "../models/profile.model.js";
 import mongoose from "mongoose";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
+
 import Posts from "../models/posts.model.js";
+
 
 const viewProfile = async (req, res) => {
   try {

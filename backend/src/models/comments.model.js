@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 const commentSchema = new mongoose.Schema({
   id: {
     type: Number,
+
     required: true,
   },
   author: {

@@ -5,7 +5,9 @@ import FACEBOOK_ICON from "../../assets/facebook.svg";
 import COVER from "../../assets/codediariescover.png";
 import { useNavigate } from 'react-router-dom';
 import backgroundImage from '../../assets/bgimg.png';
+
 import axios from 'axios'
+
 
 function SignUp() {
   const navigate = useNavigate();
@@ -18,7 +20,9 @@ function SignUp() {
   const [password, setPassword] = useState('');
   const [retypePassword, setReTypePassword] = useState('');
   const [paragraphText, setParagraphText] = useState('');
+
   const [error, setError] = useState('');
+
   const [textColor, setTextColor] = useState('text-red-500');
 
   const handleChangeUsername = (event) => setUsername(event.target.value);
@@ -60,6 +64,7 @@ function SignUp() {
     // Clear error text
     setParagraphText('');
 
+
     // Send sdata to the backend
     try {
       const response = await axios.post('http://localhost:3000/auth/signup', {
@@ -79,6 +84,7 @@ function SignUp() {
       setError('An error occurred. Please try again later.');
       console.error(err);
     }
+
   };
 
   return (

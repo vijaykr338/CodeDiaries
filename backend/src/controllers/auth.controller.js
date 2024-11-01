@@ -5,19 +5,22 @@ import jwt from "jsonwebtoken"
 export const signup = async (req, res) => {
   const { username, email, password } = req.body;
 
-
-
   try {
     const existingUser = await User.findOne({ email });
     if (existingUser) {
+
       return res.json({ status: 'error', message: 'User already exists' });
+
     }
 
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
+
+
     const newUser = new User({ username, email, password: hashedPassword });
     await newUser.save();
+
 
     const token = jwt.sign({ userId: username, email }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
@@ -26,6 +29,7 @@ export const signup = async (req, res) => {
   } catch (error) {
     console.error('Error registering user:', error);
     return res.json({ status:'error', message: 'Internal server error' });
+
   }
 };
 

@@ -15,7 +15,9 @@ function SignIn() {
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+
   const [error, setError] = useState('')
+
   const [paragraphText, setParagraphText] = useState('');
   const [textColor, setTextColor] = useState('text-red-500')
 
@@ -25,6 +27,7 @@ function SignIn() {
   const handleChangePassword = (event) => {
     setPassword(event.target.value);
   }
+
 
 
   const handleErrorTextChange = (a) => {
@@ -58,6 +61,7 @@ function SignIn() {
         password: password,
       });
   
+
       if (response.data.status === 'ok') {
         // Save the JWT token in local storage
         localStorage.setItem('token', response.data.user);
@@ -70,6 +74,7 @@ function SignIn() {
     } catch (err) {
       setError('An error occurred. Please try again later.');
       console.error(err);
+
     }
   };
 

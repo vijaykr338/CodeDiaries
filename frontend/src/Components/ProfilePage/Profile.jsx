@@ -17,9 +17,11 @@ function Profile() {
     let [details,setDetails]=useState("");
     const [error,setError]=useState("");
     const [loading, setLoading] = useState(false)
+
     const [userPosts,setUserPosts]=useState([]);
    
     const email= "assaf@gmail.com"||location.state.key ;
+
     
     useEffect(()=>{
       const fetchProfile=async()=>{
@@ -27,7 +29,9 @@ function Profile() {
           const response=await axios.get(`http://localhost:3000/profile/viewprofile/${email}`,{
             withCredentials:true
           })
+
           // console.log(response.data);
+
           setDetails(response.data);
          
         }
@@ -43,6 +47,7 @@ function Profile() {
     useEffect(()=>{
       console.log("Updated profile",details)
     },[details]);
+
 
 
     useEffect(()=>{
@@ -67,8 +72,6 @@ function Profile() {
     useEffect(()=>{
       console.log("Updated posts",userPosts)
     },[userPosts]);
-
-
 
     const handleOverviewClick=()=>{
         setOverview(true);
@@ -385,6 +388,7 @@ function Profile() {
         <div className='ml-5 mt-5 mb-5'>
           <div className="font-serif font-bold text-2xl">Posts</div>
           <div>
+
             {!userPosts?"No Posts Found" : userPosts.map((post,index)=>(
               <div key={index} className="w-full h-full flex rounded overflow-hidden shadow-lg bg-white my-4">
               <div className="w-1/2 h-full">
@@ -401,6 +405,7 @@ function Profile() {
             
             
             ))}
+
           </div>
         </div>
       </div>
