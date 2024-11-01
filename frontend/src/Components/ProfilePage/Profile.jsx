@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import axios from "axios";
 import {InboxIcon} from "@heroicons/react/outline";
 import { useLocation } from 'react-router-dom';
@@ -6,10 +6,10 @@ import { PencilIcon } from '@heroicons/react/solid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLinkedin , faGithub, faInstagram} from '@fortawesome/free-brands-svg-icons';
 import { XIcon } from '@heroicons/react/solid';
+import { AuthContext } from '../../AuthContext'
 
-
-function Profile() {
-  const location=useLocation();
+function Profile({email}) {
+  const { user, loading: authLoading } = useContext(AuthContext);
     let [overview,setOverview]=useState(true);
     let [posts,setPosts]=useState(false);
     let [update,setUpdate]=useState(false);
@@ -18,8 +18,7 @@ function Profile() {
     const [error,setError]=useState("");
     const [loading, setLoading] = useState(false)
     const [userPosts,setUserPosts]=useState([]);
-   
-    const email= "assaf@gmail.com"||location.state.key ;
+    
     
     useEffect(()=>{
       const fetchProfile=async()=>{
@@ -44,6 +43,14 @@ function Profile() {
       console.log("Updated profile",details)
     },[details]);
 
+    useEffect(() => {
+      if (user && details.email === user.email) {
+        setDetails(prevDetails => ({
+          ...prevDetails,
+          isItTheUser: true
+        }));
+      }
+    }, [user, details.email]);
 
     useEffect(()=>{
       const fetchUsersPosts=async()=>{
@@ -227,7 +234,10 @@ function Profile() {
             className="w-full h-96 rounded-tl-lg object-cover rounded-tr-lg"
             src={details.bg_pic}
           />
-          <div className={`${update?'block':'hidden'}`}>
+
+
+
+        <div className={`${details.isItTheUser?'block':'hidden'}`}>
           <button onClick={loading ? null : triggerbgInput} className="absolute top-3 right-3 bg-white rounded-full p-2 shadow-md hover:bg-gray-100">
             <PencilIcon className={`w-6 h-6 ${loading ? 'text-gray-300' : 'text-green-500'}`} />
           </button>
