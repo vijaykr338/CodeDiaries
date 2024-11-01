@@ -22,7 +22,7 @@ const viewProfile = async (req, res) => {
 };
 
 const uploadProfile=async(req,res)=>{
-  const email=  req.session.email;
+  const email=  req.params.email;
   if (!email) {
     return res.status(401).send("Unauthorized! Please Log In");
   }
@@ -55,7 +55,7 @@ const uploadProfile=async(req,res)=>{
 }
 
 const uploadBg=async(req,res)=>{
-  const email=  req.session.email;
+  const email=  req.params.email;
   if (!email) {
     return res.status(401).send("Unauthorized! Please Log In");
   }
@@ -90,7 +90,7 @@ const uploadBg=async(req,res)=>{
 }
 
 const updateProfile = async (req, res) => {
-  const email = req.session.email;
+  const email = req.params.email;
   if (!email) {
     return res.status(401).send("Unauthorized! Please Log In");
   }
@@ -118,7 +118,7 @@ const updateProfile = async (req, res) => {
 };
 
 const updateSummary = async (req, res) => {
-  const email = req.session.email;
+  const email = req.params.email;
   if (!email) {
     return res.status(401).send("Unauthorized! Please Log In");
   }

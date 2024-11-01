@@ -105,7 +105,7 @@ function Profile({email}) {
         formData.append('profile_pic', file);
         
         try {
-          const response = await axios.post(`http://localhost:3000/profile/upload/profile`, formData, {
+          const response = await axios.post(`http://localhost:3000/profile/upload/profile/${email}`, formData, {
             withCredentials: true,
             headers: {
               'Content-Type': 'multipart/form-data'
@@ -133,7 +133,7 @@ function Profile({email}) {
         formData.append('bg_pic',file);
         
         try {
-          const response = await axios.post(`http://localhost:3000/profile/upload/bg`, formData, {
+          const response = await axios.post(`http://localhost:3000/profile/upload/bg/${email}`, formData, {
             withCredentials: true,
             headers: {
               'Content-Type': 'multipart/form-data'
@@ -180,7 +180,7 @@ function Profile({email}) {
 
     const handleUpdateProfile=async()=>{
       try {
-        const response = await axios.post(`http://localhost:3000/profile/update`, details, {
+        const response = await axios.post(`http://localhost:3000/profile/update/${email}`, details, {
           withCredentials: true
         });
     
@@ -201,7 +201,7 @@ function Profile({email}) {
 
     const handleSummaryUpdate=async()=>{
       try {
-        const response = await axios.post(`http://localhost:3000/profile/update_summary`, details, {
+        const response = await axios.post(`http://localhost:3000/profile/update_summary/${email}`, details, {
           withCredentials: true
         });
 

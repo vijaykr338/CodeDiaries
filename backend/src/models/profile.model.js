@@ -3,19 +3,19 @@ import mongoose from "mongoose";
 const profileSchema=new mongoose.Schema({
     position:{
         type:String,
-        default:"N/A"
+        default:"Enter your position"
     },
     summary:{
         type:String,
-        default:"N/A"
+        default:"Enter summary"
     },
     location:{
         type:String,
-        default:"N/A"
+        default:"Enter your location"
     },
     profile_pic:{
         type:String,
-        default:"../../public/user_pic.png"
+        default:"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
     },
     bg_pic:{
         type:String,
