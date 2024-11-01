@@ -1,6 +1,7 @@
 import { Profile } from "../models/profile.model.js";
 import mongoose from "mongoose";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
+import Posts from "../models/posts.model.js";
 
 const viewProfile = async (req, res) => {
   try {
@@ -138,4 +139,23 @@ const updateSummary = async (req, res) => {
   }
 };
 
-export { viewProfile, updateProfile, updateSummary ,uploadProfile,uploadBg};
+const getPostsByEmail=async(req,res)=>{
+  try {
+   
+    const authorEmail=req.params.email;
+    const posts = await Posts.find({authorEmail});
+
+    if (!posts) {
+      return res.status(404).send("User not found");
+    }
+    console.log(posts);
+    res.status(200).send(posts);
+  } catch (err) {
+    console.error("Error fetching details:", err);
+    res.status(400).send("Error fetching details");
+  }
+
+  
+}
+
+export { viewProfile, updateProfile, updateSummary ,uploadProfile,uploadBg,getPostsByEmail};
