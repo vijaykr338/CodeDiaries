@@ -14,8 +14,6 @@ function Edit() {
     const [Content, setContent] = useState("");
     const { register, handleSubmit, reset } = useForm();
 
-
-
   const notify = () =>
     toast.success("Post Created", {
       position: "top-right",
@@ -59,17 +57,18 @@ function Edit() {
 
   return (
     <>
+    <div className="wrapper overflow-hidden">
       <div className="overflow-x-hidden w-screen bg-black">
         <Header />
       </div>
-      <div className="flex justify-center flex-shrink-0 bg-black h-full w-full">
-        <div className="flex w-11/12 sm:w-4/5 bg-white my-10 px-10 h-full py-6 flex-col rounded-lg">
-          <div className="flex font-bold text-4xl sm:text-7xl">
+      <div className="flex justify-center flex-shrink-0 bg-[url('https://t4.ftcdn.net/jpg/02/06/60/49/360_F_206604992_yMzBFofmJEeznSvs3OZw0NXYwVBb2ryr.jpg')] bg-fixed bg-cover bg-no-repeat bg-center h-full w-screen">
+        <div className="flex w-11/12 sm:w-4/5 bg-[rgba(17, 25, 40, 0.75)] backdrop-blur-md my-6 px-10 h-full py-6 justify-center flex-col rounded-lg backdrop-saturate-150 border-white border-opacity-15 border-2 items-center">
+          <div className="flex font-bold text-4xl sm:text-7xl text-white justify-center mb-5 " >
             Create Post!
           </div>
-          <div className="flex flex-col flex-shrink-0 sm:w-3/5 justify-start gap-6 my-7 sm:text-2xl">
+          <div className="flex flex-col flex-shrink-0 sm:w-3/5 gap-6 my-7 sm:text-2xl justify-center">
             <form
-              className="flex flex-col gap-9"
+              className="flex flex-col gap-9 "
               onSubmit={handleSubmit(OnSubmit)}
               action="/createpost"
             >
@@ -105,7 +104,7 @@ function Edit() {
               <input
                 onClick={notify}
                 type="submit"
-                className="border-2 border-black bg-black font-bold text-white py-2 px-3  rounded-full hover:shadow-xl shadow-cyan-300"
+                className="border-2 border-white bg-black font-bold text-white py-2 px-3  rounded-full hover:shadow-xl shadow-cyan-300"
               />
               <ToastContainer
                 position="top-right"
@@ -127,14 +126,15 @@ function Edit() {
               />
             </form>
             <div>
-              <div className="font-bold text-2xl">Preview:</div>
+              <div className="font-bold text-2xl text-white">Preview:</div>
               <div
-                className=" px-8 py-4 border-2 border-black min-h-24 rounded-2xl h-full overflow-auto"
+                className=" px-8 py-4 border-2 text-white border-white min-h-24 rounded-2xl h-full overflow-auto"
                 dangerouslySetInnerHTML={{ __html: Content }}
               />
             </div>
           </div>
         </div>
+      </div>
       </div>
     </>
   );

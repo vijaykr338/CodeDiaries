@@ -49,7 +49,7 @@ const HomePage = () => {
         </div>
       </div>
       <Divider />
-      <div className="flex flex-col lg:flex-row justify-between gap-16 items-center lg:items-start p-5 md:p-10 ">
+      <div className="flex flex-col lg:flex-row justify-center gap-16 items-center lg:items-start p-5 md:p-10 ">
         <div className="text-white h-full">
           {blogs.length > 0 && (
             <Link to={`/post/${blogs[0]._id}`}>

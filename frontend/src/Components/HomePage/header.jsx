@@ -32,7 +32,7 @@ const Header = () => {
   }
 
   return (
-    <div className="w-screen flex justify-between items-center pt-5 h-32 pl-5 pr-5 md:pl-10 md:pr-10 overflow-hidden">
+    <div className="w-screen flex justify-between items-center py-5 px-5 md:px-10 md: overflow-hidden sticky top-0">
       <div className="flex justify-between items-center gap-2 md:gap-3 lg:gap-5">
        {user && <Link to={`/profile/${user.email}`}>
           <img
@@ -41,7 +41,7 @@ const Header = () => {
           />
         </Link>}
         <Link to="/">
-          <GoHomeFill className="text-white h-10 w-10" />
+          <GoHomeFill className="text-white h-14 w-14" />
         </Link>
         <Link to="/create-post">
           {user ? (
