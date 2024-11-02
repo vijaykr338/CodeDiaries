@@ -59,7 +59,7 @@ function SignUp() {
     setParagraphText('');
 
     // Send data to backend
-    await fetch('https://codediaries-1wye.onrender.com/auth/signup', {
+    await fetch('http://localhost:3000/auth/signup', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -11,17 +11,9 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use((req, res, next) => {
-  res.cookie('__vercel_live_token', 'abc123', {
-    sameSite: 'None',
-    secure: true,
-  });
-  next();
-});
-
 app.use(
   cors({
-    origin: "https://codediaries-1.onrender.com/",
+    origin: "http://localhost:5173",
     credentials: true,
   })  
 );  

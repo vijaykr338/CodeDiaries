@@ -28,7 +28,7 @@ const HomePage = () => {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const response = await fetch("https://codediaries-1wye.onrender.com/posts/getposts/");
+        const response = await fetch("http://localhost:3000/posts/getposts/");
         const data = await response.json();
         setBlogs(data);
       } catch (error) {
