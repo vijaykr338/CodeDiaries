@@ -37,8 +37,8 @@ const HorizonntalScrollCard = ({ blogs }) => {
                 return (
 
                   <div key={index} className='relative min-w-[20rem] w-80 border-5 border-r border-r-gray-300 pr-5'>
-                    <Link to="/post/example" onClick={() => handleCommentClick(index)} >
-                    <img src={blog.image} alt='image' className='h-40 w-full object-cover' />
+                    <Link to={`/post/${blog._id}`} onClick={() => handleCommentClick(index)} >
+                    <img src={blog.coverimg} alt='image' className='h-40 w-full object-cover' />
                     <div className='text-gray-400 mb-2'>{blog.date}</div>
                     <div className='text-2xl font-bold mb-2 text-balance'>{blog.title}</div>
                     <div><div className='text-lg text-gray-500'>{blog.brief}</div></div>
