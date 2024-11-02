@@ -34,14 +34,18 @@ export const updateComment = async (req, res) => {
   const { content } = req.body;
 
   try {
-    const updatedComment = await Comment.findByIdAndUpdate(
-      id,
-      { content },
-      { new: true }
-    );
-    if (!updatedComment) {
+    const comment = await Comment.findById(id);
+    if (!comment) {
       return res.status(404).json({ message: "Comment not found" });
     }
+    
+    // Check if the user is the author of the comment
+    if (comment.author !== req.user.username) {
+      return res.status(403).json({ message: "Unauthorized to update this comment" });
+    }
+
+    comment.content = content;
+    const updatedComment = await comment.save();
     res.json(updatedComment);
   } catch (error) {
     console.error("Error updating the comment:", error);
@@ -49,14 +53,22 @@ export const updateComment = async (req, res) => {
   }
 };
 
+
 export const deleteComment = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const deletedComment = await Comment.findByIdAndDelete(id);
-    if (!deletedComment) {
+    const comment = await Comment.findById(id);
+    if (!comment) {
       return res.status(404).json({ message: "Comment not found" });
     }
+    
+    // Check if the user is the author of the comment
+    if (comment.author !== req.user.username) {
+      return res.status(403).json({ message: "Unauthorized to delete this comment" });
+    }
+
+    await comment.remove();
     res.json({ message: "Comment deleted successfully" });
   } catch (error) {
     console.error("Error deleting the comment:", error);
