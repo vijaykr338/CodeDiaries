@@ -132,13 +132,13 @@ const PostPage = () => {
       <nav className="flex-shrink-0 sticky top-0 p-4 bg-gray-100 rounded-lg shadow-md">
         <ul className="space-y-4">
           <li>
-            <a href="#link1" className="flex items-center space-x-2 hover:text-blue-600">
+            <a href="/" className="flex items-center space-x-2 hover:text-blue-600">
               <FaHome size={24} />
               <Link to="/">Home</Link>
             </a>
           </li>
           <li>
-            <a href="#link2" className="flex items-center space-x-2 hover:text-blue-600">
+            <a href={`/profile/${post.authorName}`} className="flex items-center space-x-2 hover:text-blue-600">
               <FaUser size={24} />
               <span>Profile</span>
             </a>

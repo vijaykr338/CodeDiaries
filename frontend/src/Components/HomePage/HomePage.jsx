@@ -49,8 +49,8 @@ const HomePage = () => {
         </div>
       </div>
       <Divider />
-      <div className="flex flex-col lg:flex-row justify-center gap-16 items-center lg:items-start p-5 md:p-10 ">
-        <div className="text-white h-full">
+      <div className="flex flex-col lg:flex-row gap-16 items-center lg:items-start p-5 md:p-10 justify-around">
+        <div className="text-white h-full w-3/5">
           {blogs.length > 0 && (
             <Link to={`/post/${blogs[0]._id}`}>
               <img
@@ -70,7 +70,7 @@ const HomePage = () => {
               return (
                 <div key={index} className="mb-4">
              <Link to={`/post/${blog._id}`}>
-                  <div className="flex  gap-5 items-center mb-5">
+                  <div className="flex w-full gap-5 items-center mb-5">
                     <img src={blog.coverimg} className=" w-52 object-cover" />
                     <div>
                       <div className="flex text-gray-600 mb-2 text-sm">
