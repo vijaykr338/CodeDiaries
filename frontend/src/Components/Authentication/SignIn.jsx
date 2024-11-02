@@ -68,7 +68,7 @@ function SignIn() {
     console.log('Sending login request with:', { username, password });
   
     try {
-      const response = await axios.post('http://localhost:3000/auth/signin', {
+      const response = await axios.post('https://codediaries-1wye.onrender.com/auth/signin', {
         username: username,
         password: password,
       });

@@ -23,7 +23,7 @@ function Profile({email}) {
     useEffect(()=>{
       const fetchProfile=async()=>{
         try{
-          const response=await axios.get(`http://localhost:3000/profile/viewprofile/${email}`,{
+          const response=await axios.get(`https://codediaries-1wye.onrender.com/profile/viewprofile/${email}`,{
             withCredentials:true
           })
           // console.log(response.data);

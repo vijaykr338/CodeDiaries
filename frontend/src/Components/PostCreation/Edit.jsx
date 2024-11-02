@@ -41,7 +41,7 @@ function Edit() {
     data.authorName = user.username;
     data.authorEmail = user.email;
 
-    let r = await fetch('http://localhost:3000/posts/create-post', {
+    let r = await fetch('https://codediaries-1wye.onrender.com/posts/create-post', {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',

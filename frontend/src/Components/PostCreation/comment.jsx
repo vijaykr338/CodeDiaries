@@ -30,7 +30,7 @@ const CommentBox = () => {
       const newId = convertStringToASCIIInt(id);
       console.log(newId);
       try {
-        const response = await fetch(`http://localhost:3000/comments/comments/${newId}`);
+        const response = await fetch(`https://codediaries-1wye.onrender.com/comments/comments/${newId}`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -64,7 +64,7 @@ const CommentBox = () => {
 
     try {
 
-      const response = await fetch('http://localhost:3000/comments/comments', {
+      const response = await fetch('https://codediaries-1wye.onrender.com/comments/comments', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -95,7 +95,7 @@ const CommentBox = () => {
     try {
       const updatedComment = { content: editCommentContent };
 
-      const response = await fetch(`http://localhost:3000/comments/comments/${commentId}`, {
+      const response = await fetch(`https://codediaries-1wye.onrender.com/comments/comments/${commentId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -124,7 +124,7 @@ const CommentBox = () => {
   const handleDeleteComment = async (commentId) => {
     try {
 
-      const response = await fetch(`http://localhost:3000/comments/comments/${commentId}`, {
+      const response = await fetch(`https://codediaries-1wye.onrender.com/comments/comments/${commentId}`, {
         method: 'DELETE',
       });
 

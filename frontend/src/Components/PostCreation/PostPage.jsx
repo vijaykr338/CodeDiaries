@@ -94,7 +94,7 @@ const PostPage = () => {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/posts/getpost/${id}`);
+        const response = await axios.get(`https://codediaries-1wye.onrender.com/posts/getpost/${id}`);
         setPost(response.data);
         console.log(response.data)
       } catch (error) {

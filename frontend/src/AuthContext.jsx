@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const token = localStorage.getItem('authToken');
     if (token) {
-      axios.get('http://localhost:3000/auth/me', {
+      axios.get('https://codediaries-1wye.onrender.com/auth/me', {
         headers: {
           'Authorization': `Bearer ${token}`
         }
