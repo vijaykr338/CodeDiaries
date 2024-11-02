@@ -1,0 +1,14 @@
+{
+    "headers": [
+      {
+        "source": "/(.*)",
+        "headers": [
+          {
+            "key": "Set-Cookie",
+            "value": "__vercel_live_token=abc123; SameSite=None; Secure"
+          }
+        ]
+      }
+    
+    ]
+  }

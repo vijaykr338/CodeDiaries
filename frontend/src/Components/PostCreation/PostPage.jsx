@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from 'react-router-dom';
 import axios from "axios"
+import { Link } from "react-router-dom";
 
 import CommentBox from './comment'
 
@@ -113,56 +114,58 @@ const PostPage = () => {
 
 
   return (
-    <div className="mx-48 my-32">
-      <span className="text-7xl font-raleway italic">{post.title}</span>
+   <>
+     <div className="w-full mx-auto px-8 bg-black pb-5 pt-5 ">
+    <h1 className="text-5xl text-white font-semibold italic mb-4">{post.title}</h1>
 
-      <div className="person flex items-center">
-        <img src={person} alt="some" className="rounded-full h-20 my-10" />
-        <div className="mx-8 space-y-1 flex flex-col">
-        <span className="text-lg font-bold">By {post.authorName}</span>
-          <span className="text-md font-light">{post.date}</span>
-        </div>
+    <div className="flex items-center mb-6">
+      <img src={person} alt="Author" className="rounded-full h-16 w-16 border-2 border-gray-300" />
+      <div className="ml-4">
+        <span className="text-lg font-bold text-white">{post.authorName}</span>
+        <span className="block text-sm text-white ">{post.date}</span>
       </div>
-
-      <div className="content"></div>
-      <img src={post.coverimg} alt="sds" />
-
-      <div className="mr-44 flex">
-        <div>
-          <div className="sticky top-0 -mr-20 my-10 h-screen p-4">
-            <ul className="space-y-4">
-              <li>
-                <a href="#link1">
-                  <FaHome size={24} />
-                </a>
-              </li>
-              <li>
-                <a href="#link2">
-                  <FaUser size={24} />
-                </a>
-              </li>
-              <li>
-                <a href="#link3">
-                  <FaEnvelope size={24} />
-                </a>
-              </li>
-              <li>
-                <a href="#link4">
-                  <FaCog size={24} />
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div
-          className=" p-4 mt-2 text-2xl mx-24"
-          dangerouslySetInnerHTML={{ __html: post.content }}
-        />
-      </div>
-
-      <CommentBox user={post.authorName} />
-
     </div>
+
+    <img src={post.coverimg} alt="Cover" className="w-full rounded-lg mb-8 shadow-md" />
+
+    <div className="flex mb-10">
+      <nav className="flex-shrink-0 sticky top-0 p-4 bg-gray-100 rounded-lg shadow-md">
+        <ul className="space-y-4">
+          <li>
+            <a href="#link1" className="flex items-center space-x-2 hover:text-blue-600">
+              <FaHome size={24} />
+              <Link to="/">Home</Link>
+            </a>
+          </li>
+          <li>
+            <a href="#link2" className="flex items-center space-x-2 hover:text-blue-600">
+              <FaUser size={24} />
+              <span>Profile</span>
+            </a>
+          </li>
+          <li>
+            <a href="#link3" className="flex items-center space-x-2 hover:text-blue-600">
+              <FaEnvelope size={24} />
+              <span>Messages</span>
+            </a>
+          </li>
+          <li>
+            <a href="#link4" className="flex items-center space-x-2 hover:text-blue-600">
+              <FaCog size={24} />
+              <span>Settings</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <div className="flex-1 p-6 mx-4 bg-white rounded-lg shadow-md">
+        <div className="text-lg text-gray-800" dangerouslySetInnerHTML={{ __html: post.content }} />
+      </div>
+    </div>
+  </div>
+    <CommentBox user={post.authorName} />
+
+   </>
   );
 };
 

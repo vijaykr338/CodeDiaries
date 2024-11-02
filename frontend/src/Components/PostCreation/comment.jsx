@@ -160,52 +160,58 @@ const CommentBox = () => {
         <div className='w-full p-4'>
           {comments.length > 0 ? (
 
-            comments.map((commentItem, index) => (
-              <div key={index} className='border-b mb-4 pb-2'>
+comments.map((commentItem, index) => (
+  <div key={index} className='border-b mb-4 pb-2'>
+    <p>
+      <strong>{commentItem.author}</strong> on {new Date(commentItem.date).toLocaleDateString()}
+    </p>
+    {editCommentId === commentItem._id ? (
+      <div>
+        <input
+          type='text'
+          value={editCommentContent}
+          onChange={(e) => setEditCommentContent(e.target.value)}
+          className='border border-gray-500 rounded-lg p-2 w-full mb-3'
+        />
+        <button 
+          onClick={() => handleUpdateComment(commentItem._id)}
+          className='bg-blue-500 text-white px-2 py-1 rounded-lg ml-2'
+        >
+          Update
+        </button>
+        <button 
+          onClick={() => setEditCommentId(null)} 
+          className='bg-gray-500 text-white px-2 py-1 rounded-lg ml-2'
+        >
+          Cancel
+        </button>
+      </div>
+    ) : (
+      <div className='flex justify-between'>
+        <p>{commentItem.content}</p>
+        <div>
+          {user.username === commentItem.author && ( // Check if user is the author
+            <>
+              <button 
+                onClick={() => handleEdit(commentItem._id, commentItem.content)} 
+                className='text-blue-500 ml-2'
+              >
+                Edit
+              </button>
+              <button 
+                onClick={() => handleDeleteComment(commentItem._id)} 
+                className='text-red-500 ml-2'
+              >
+                Delete
+              </button>
+            </>
+          )}
+        </div>
+      </div>
+    )}
+  </div>
+))
 
-                <p><strong>{commentItem.author}</strong> on {new Date(commentItem.date).toLocaleDateString()}</p>
-                {editCommentId === commentItem._id ? (
-                  <div>
-                    <input
-                      type='text'
-                      value={editCommentContent}
-                      onChange={(e) => setEditCommentContent(e.target.value)}
-                      className='border border-gray-500 rounded-lg p-2 w-full mb-3'
-                    />
-                    <button 
-                      onClick={() => handleUpdateComment(commentItem._id)}
-                      className='bg-blue-500 text-white px-2 py-1 rounded-lg ml-2'
-                    >
-                      Update
-                    </button>
-                    <button 
-                      onClick={() => setEditCommentId(null)} 
-                      className='bg-gray-500 text-white px-2 py-1 rounded-lg ml-2'
-                    >
-                      Cancel
-                    </button>
-                  </div>
-                ) : (
-                  <div className='flex justify-between'>
-                    <p>{commentItem.content}</p>
-                    <div>
-                      <button 
-                        onClick={() => handleEdit(commentItem._id, commentItem.content)} 
-                        className='text-blue-500 ml-2'
-                      >
-                        Edit
-                      </button>
-                      <button 
-                        onClick={() => handleDeleteComment(commentItem._id)} 
-                        className='text-red-500 ml-2'
-                      >
-                        Delete
-                      </button>
-                    </div>
-                  </div>
-                )}
-              </div>
-            ))
           ) : (
             <p>No comments yet for this blog post.</p>
           )}

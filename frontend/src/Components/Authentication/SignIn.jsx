@@ -73,17 +73,21 @@ function SignIn() {
         password: password,
       });
   
-      // Handle successful login
+
       console.log('Login response:', response.data);
       handleTextColorChange(2);
       setParagraphText('Login Successful');
       console.log('Login successful:', response.data);
   
-      // Store the authentication token
+    
       localStorage.setItem('authToken', response.data.user);
   
-      // Redirect to the homepage or another page
       navigate('/');
+
+
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
     } catch (error) {
       console.error('Error during login:', error);
       handleErrorTextChange(1);

@@ -20,7 +20,7 @@ const HorizonntalScrollCard = ({ blogs }) => {
   return (
     <div className='bg-white p-5 md:p-10 w-screen'>
       <div className='w-screen flex justify-start items-center gap-5 md:gap-10'>
-        <div className='hover:text-gray-400 text-sm sm:text-lg duration-200'>PILIHAN EDITOR</div>
+
         <div className='hover:text-gray-400 text-sm sm:text-lg duration-200'>TECHNOLOGY</div>
         <div className='hover:text-gray-400 text-sm sm:text-lg duration-200'>SCIENCE</div>
         <div className='hover:text-gray-400 text-sm sm:text-lg duration-200'>ART</div>
