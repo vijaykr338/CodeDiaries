@@ -21,7 +21,7 @@ app.use((req, res, next) => {
 
 app.use(
   cors({
-    origin: "https://code-diaries.vercel.app/",
+    origin: "https://codediaries-1.onrender.com/",
     credentials: true,
   })  
 );  
