@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { AuthContext } from '../../AuthContext';
 import { useParams } from 'react-router-dom';
+import { AuthContext } from '../../AuthContext'
 
 const CommentBox = () => {
   const { id } = useParams();
@@ -10,10 +10,6 @@ const CommentBox = () => {
   const [comments, setComments] = useState([]);
   const [editCommentId, setEditCommentId] = useState(null);
   const [editCommentContent, setEditCommentContent] = useState('');
-
-
-  console.log("id is", id);
-  console.log("user is:", user);
 
   function convertStringToASCIIInt(input) {
     let asciiString = '';
@@ -93,8 +89,11 @@ const CommentBox = () => {
 
   const handleUpdateComment = async (commentId) => {
     try {
-      const updatedComment = { content: editCommentContent };
-
+      const updatedComment = { 
+        content: editCommentContent,
+        author: user
+      };
+  
       const response = await fetch(`http://localhost:3000/comments/comments/${commentId}`, {
         method: 'PUT',
         headers: {
@@ -102,42 +101,47 @@ const CommentBox = () => {
         },
         body: JSON.stringify(updatedComment),
       });
-
+  
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-
+  
       const updatedData = await response.json();
+  
       setComments((prevComments) =>
         prevComments.map((comment) =>
           comment._id === commentId ? { ...comment, content: updatedData.content } : comment
-
         )
       );
+  
       setEditCommentId(null);
       setEditCommentContent('');
     } catch (error) {
       console.error('Error updating the comment:', error);
     }
   };
+  
 
   const handleDeleteComment = async (commentId) => {
     try {
-
       const response = await fetch(`http://localhost:3000/comments/comments/${commentId}`, {
         method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ author: user }), 
       });
-
+  
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-
-
+  
       setComments((prevComments) => prevComments.filter((comment) => comment._id !== commentId));
     } catch (error) {
       console.error('Error deleting the comment:', error);
     }
   };
+  
 
   return (
     <div className='w-full bg-white p-4'>

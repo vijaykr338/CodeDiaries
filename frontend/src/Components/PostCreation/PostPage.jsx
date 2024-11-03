@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState , useContext } from "react";
 import { useParams } from 'react-router-dom';
 import axios from "axios"
 import { Link } from "react-router-dom";
 
 import CommentBox from './comment'
+import { AuthContext } from "../../AuthContext";
 
 import person from "./person.jpg";
 import { FaHome, FaUser, FaEnvelope, FaCog } from "react-icons/fa";
 
 const PostPage = () => {
+
+  const { user } = useContext(AuthContext);
   
   
     const [content, setContent] = useState(
@@ -163,7 +166,7 @@ const PostPage = () => {
       </div>
     </div>
   </div>
-    <CommentBox user={post.authorName} />
+    { user && <CommentBox user={post.authorName} />}
 
    </>
   );
